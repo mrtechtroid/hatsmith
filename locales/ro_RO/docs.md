@@ -1,4 +1,4 @@
-# [Introducere](#introduction)
+# [Introducere](#introducere)
 
 ---
 
@@ -6,7 +6,7 @@ Hat.sh este o aplicație web gratuită [opensource] care oferă criptare sigură
 
 <br>
 
-# [Caracteristici](#features)
+# [Caracteristici](#caracteristici)
 
 ---
 
@@ -16,7 +16,7 @@ Hat.sh este o aplicație web gratuită [opensource] care oferă criptare sigură
 - [Argon2id] - pentru derivarea cheii bazate pe parolă.
 - [X25519] - pentru schimbul de chei.
 
-Biblioteca libsodium este folosită pentru toți algoritmii criptografici. [Detalii tehnice aici](#technical-details).
+Biblioteca libsodium este folosită pentru toți algoritmii criptografici. [Detalii tehnice aici](#detalii-tehnice).
 
 <br>
 
@@ -37,7 +37,7 @@ Biblioteca libsodium este folosită pentru toți algoritmii criptografici. [Deta
 
 <br>
 
-# [Instalare](#installation)
+# [Instalare](#instalare)
 
 ---
 Este ușor să găzduiești și să implementezi hat.sh, poți face asta fie cu npm, fie cu docker.
@@ -85,7 +85,7 @@ npm run start
 aplicația ar trebui să ruleze pe portul 3391.
 <br>
 
-dacă dorești să rulezi aplicația în modul de dezvoltare, rulează:
+dacă dorești să rulezi aplicația în mediul de dezvoltare, rulează:
 
 <br>
 
@@ -179,11 +179,11 @@ hat.sh este disponibil și ca imagine Docker. Poți găsi pe [Docker Hub].
 
 <br>
 
-# [Utilizare](#usage)
+# [Utilizare](#utilizare)
 
 ---
 
-## Criptarea de Fișiere
+## Criptarea Fișierelor
 
 - ### folosind o parolă
 
@@ -230,7 +230,7 @@ hat.sh este disponibil și ca imagine Docker. Poți găsi pe [Docker Hub].
 
 <br>
 
-# [Limitări](#limitations)
+# [Limitări](#limitări)
 
 ---
 
@@ -240,11 +240,11 @@ Fișierele criptate cu hat.sh sunt identificabile prin semnătura fișierului fo
 
 ### Browsere Safari și Mobile
 
-Browserele Safari și de cele pentru telefoane mobile sunt limitate la un singur fișier cu dimensiunea maximă de 1GB din cauza unor probleme legate de service-workers. În plus, această limitare se aplică și atunci când aplicația nu reușește să înregistreze service-worker-ul (de exemplu, FireFox Private Browsing).
+Browserele Safari și cele pentru telefoanele mobile sunt limitate la un singur fișier cu dimensiunea maximă de 1GB din cauza unor probleme legate de service-workers. În plus, această limitare se aplică și atunci când aplicația nu reușește să înregistreze service-worker-ul (de exemplu, FireFox Private Browsing).
 
 <br>
 
-# [Cele mai bune practici](#best-practices)
+# [Cele mai bune practici](#cele-mai-bune-practici)
 
 ---
 
@@ -296,7 +296,7 @@ Partajarea parolei de decriptare poate fi făcută folosind o aplicație de mesa
 
 <br>
 
-# [Întrebări frecvente](#faq)
+# [Întrebări frecvente](#întrebări-frecvente)
 
 ---
 
@@ -328,7 +328,7 @@ Nu, nu știm parola ta. Asigură-te întotdeauna că îți stochezi parolele în
 
 ### De ce văd un mesaj care spune "Ai o experiență limitată (fișier unic, 1GB)"?
 
-Înseamnă că browserul tău nu suportă server-worker fetch api. Prin urmare, ești limitat la fișiere de dimensiuni mici. vezi [Limitări](#limitations) pentru mai multe informații.
+Înseamnă că browserul tău nu suportă server-worker fetch api. Prin urmare, ești limitat la fișiere de dimensiuni mici. vezi [Limitări](#limitări) pentru mai multe informații.
 
 <hr style="height: 1px" id="de-ce-am-nevoie-de-cheia-privată">
 
@@ -356,7 +356,7 @@ De asemenea, dacă simți că cheia ta privată a fost compromisă (de exemplu, 
 
 ### Cum generează o pereche de chei (Publică și Privată)?
 
-Poți genera chei vizitând [pagina de generare a cheilor](https://hat.sh/generate-keys), asigură-te că [stochezi cheile în siguranță](#best-practices)
+Poți genera chei vizitând [pagina de generare a cheilor](https://hat.sh/generate-keys), asigură-te că [stochezi cheile în siguranță](#cele-mai-bune-practici).
 
 <hr style="height: 1px">
 
@@ -411,7 +411,7 @@ Nu există nicio recompensă disponibilă în acest moment, dar contul tău de g
 
 <br>
 
-# [Detalii Tehnice](#technical-details)
+# [Detalii Tehnice](#detalii-tehnice)
 
 ---
 
