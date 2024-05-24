@@ -1,91 +1,91 @@
-# [Introduction](#introduction)
+# [Introducere](#introduction)
 
 ---
 
-Hat.sh is a free [opensource] web app that provides secure file encryption in the browser.
+Hat.sh este o aplicație web gratuită [opensource] care oferă criptare sigură a fișierelor în browser.
 
 <br>
 
-# [Features](#features)
+# [Caracteristici](#features)
 
 ---
 
-### Security
+### Securitate
 
-- [XChaCha20-Poly1305] - for symmetric encryption.
-- [Argon2id] - for password-based key derivation.
-- [X25519] - for key exchange.
+- [XChaCha20-Poly1305] - pentru criptare simetrică.
+- [Argon2id] - pentru derivarea cheii bazate pe parolă.
+- [X25519] - pentru schimbul de chei.
 
-The libsodium library is used for all cryptographic algorithms. [Technical details here](#technical-details).
-
-<br>
-
-### Privacy
-
-- The app runs locally in your browser.
-- No data is ever collected or sent to anyone.​
+Biblioteca libsodium este folosită pentru toți algoritmii criptografici. [Detalii tehnice aici](#technical-details).
 
 <br>
 
-### Functionality
+### Confidențialitate
 
-- Secure encryption/decryption of files with passwords or keys.
-- Secure random password generation.
-- Asymmetric key pair generation.
-- Authenticated key exchange.
-- Password strength estimation.
+- Aplicația rulează local în browserul tău.
+- Niciun fel de date nu sunt colectate sau trimise către nimeni.​
 
 <br>
 
-# [Installation](#installation)
+### Funcționalitate
+
+- Criptare/decriptare sigură a fișierelor cu parole sau chei.
+- Generare sigură a parolelor aleatorii.
+- Generare perechi de chei asimetrice.
+- Schimb de chei autentificate.
+- Estimarea puterii parolei.
+
+<br>
+
+# [Instalare](#installation)
 
 ---
-It's easy to self host and deploy hat.sh, you can do that either with npm or docker
+Este ușor să găzduiești și să implementezi hat.sh, poți face asta fie cu npm, fie cu docker.
 
-If you wish to self host the app please follow these instructions:
+Dacă dorești să găzduiești aplicația, te rugăm să urmezi aceste instrucțiuni:
 
 <br>
 
-## With npm
+## Cu npm
 
-Before installation make sure you are running [nodejs](https://nodejs.org/en/) and have [npm](https://www.npmjs.com/) installed
+Înainte de instalare, asigură-te că rulezi [nodejs](https://nodejs.org/en/) și ai [npm](https://www.npmjs.com/) instalat.
 
 <br >
 
-1. clone the github repository
+1. clonează repo-ul de pe github
 
 ```bash
 git clone https://github.com/sh-dv/hat.sh.git hat.sh
 ```
 
-2. move to the folder
+2. mută-te în folder
 
 ```bash
 cd hat.sh
 ```
 
-3. install dependencies
+3. instalează dependențele
 
 ```bash
 npm install
 ```
 
-4. build app
+4. construiește aplicația
 
 ```bash
 npm run build
 ```
 
-5. start hat.sh
+5. pornește hat.sh
 
 ```bash
 npm run start
 ```
 
-the app should be running on port 3391.
+aplicația ar trebui să ruleze pe portul 3391.
 <br>
 
-if you wish to run the app in development enviroment run :
+dacă dorești să rulezi aplicația în modul de dezvoltare, rulează:
 
 <br>
 
@@ -95,21 +95,21 @@ npm run dev
 
 <br>
 
-## With docker
+## Cu docker
 
-You can install the app with docker in multiple ways. You are free to choose which method you like.
+Poți instala aplicația cu docker în mai multe moduri. Ești liber să alegi metoda preferată.
 
 <br>
 
-- #### install from docker hub
+- #### instalează de pe docker hub
 
-1. pull image from docker hub
+1. descarcă imaginea de pe docker hub
 
 ```bash
 docker pull shdv/hat.sh:latest
 ```
 
-2. run container
+2. rulează containerul
 
 ```bash
 docker run -d -p 3991:80 shdv/hat.sh
@@ -117,27 +117,27 @@ docker run -d -p 3991:80 shdv/hat.sh
 
 <br>
 
-- #### Build an image from source
+- #### Construiește o imagine din codul sursă
 
-1. clone the github repository
+1. clonează repo-ul de pe github
 
 ```bash
 git clone https://github.com/sh-dv/hat.sh.git hat.sh
 ```
 
-2. move to the folder
+2. mută-te în folder
 
 ```bash
 cd hat.sh
 ```
 
-3. build image using docker
+3. construiește imaginea folosind docker
 
 ```bash
 docker build . -t shdv/hat.sh
 ```
 
-4. run container
+4. rulează containerul
 
 ```bash
 docker run -d -p 3991:80 shdv/hat.sh
@@ -145,27 +145,27 @@ docker run -d -p 3991:80 shdv/hat.sh
 
 <br>
 
-- #### Using docker compose
+- #### Folosind docker compose
 
-1. clone the github repository
+1. clonează repo-ul de pe github
 
 ```bash
 git clone https://github.com/sh-dv/hat.sh.git hat.sh
 ```
 
-2. move to the folder
+2. mută-te în folder
 
 ```bash
 cd hat.sh
 ```
 
-3. build image using docker compose
+3. construiește imaginea folosind docker compose
 
 ```bash
 docker compose build
 ```
 
-4. run container
+4. rulează containerul
 
 ```bash
 docker compose up
@@ -173,251 +173,251 @@ docker compose up
 
 <br>
 
-The app should be running on port 3991.
+Aplicația ar trebui să ruleze pe portul 3991.
 
-hat.sh is also available as a Docker image. You can find it on [Docker Hub].
+hat.sh este disponibil și ca imagine Docker. Poți găsi pe [Docker Hub].
 
 <br>
 
-
-# [Usage](#usage)
+# [Utilizare](#usage)
 
 ---
 
-## File Encryption
+## Criptarea de Fișiere
 
-- ### using a password
+- ### folosind o parolă
 
-1. Open hat.sh.
-2. Navigate to the Encryption panel.
-3. Drag & Drop or Select the files that you wish to encrypt.
-4. Enter a password or generate one.
-5. Download the encrypted file.
+1. Deschide hat.sh.
+2. Navighează la panoul de Criptare.
+3. Trage și Plasează sau Selectează fișierele pe care dorești să le criptezi.
+4. Introdu o parolă sau generează una.
+5. Descarcă fișierul criptat.
 
-> You should always use a strong password!
+> Ar trebui să folosești întotdeauna o parolă puternică!
 
-- ### using public and private keys
+- ### folosind chei publice și private
 
-1. Open hat.sh.
-2. Navigate to the Encryption panel.
-3. Drag & Drop or Select the files that you wish to encrypt.
-4. Choose public key method.
-5. Enter or load recipient's public key and your private key.
-   if you don't have public and private keys you can generate a key pair.
-6. Download the encrypted file.
-7. Share your public key with the recipient so he will be able to decrypt the file.
+1. Deschide hat.sh.
+2. Navighează la panoul de Criptare.
+3. Trage și Plasează sau Selectează fișierele pe care dorești să le criptezi.
+4. Alege metoda cheie publică.
+5. Introdu sau încarcă cheia publică a destinatarului și cheia ta privată.
+   dacă nu ai chei publice și private, poți genera o pereche de chei.
+6. Descarcă fișierul criptat.
+7. Partajează cheia ta publică cu destinatarul pentru ca acesta să poată decripta fișierul.
 
-> Never share your private key to anyone! Only public keys should be exchanged.
-
-<br>
-
-## File Decryption
-
-- ### using a password
-
-1. Open hat.sh.
-2. Navigate to the Decryption panel.
-3. Drag & Drop or Select the files that you wish to decrypt.
-4. Enter the encryption password.
-5. Download the decrypted file.
-
-- ### using public and private keys
-
-1. Open hat.sh.
-2. Navigate to the Decryption panel.
-3. Drag & Drop or Select the files that you wish to decrypt.
-4. Enter or load sender's public key and your private key.
-5. Download the decrypted file.
+> Nu împărtăși niciodată cheia ta privată cu nimeni! Doar cheile publice ar trebui schimbate.
 
 <br>
 
-# [Limitations](#limitations)
+## Decriptarea Fișierelor
+
+- ### folosind o parolă
+
+1. Deschide hat.sh.
+2. Navighează la panoul de Decriptare.
+3. Trage și Plasează sau Selectează fișierele pe care dorești să le decriptezi.
+4. Introdu parola de criptare.
+5. Descarcă fișierul decriptat.
+
+- ### folosind chei publice și private
+
+1. Deschide hat.sh.
+2. Navighează la panoul de Decriptare.
+3. Trage și Plasează sau Selectează fișierele pe care dorești să le decriptezi.
+4. Introdu sau încarcă cheia publică a expeditorului și cheia ta privată.
+5. Descarcă fișierul decriptat.
+
+<br>
+
+# [Limitări](#limitations)
 
 ---
 
-### File Signature
+### Semnătura Fișierului
 
-Files encrypted with hat.sh are identifiable by looking at the file signature that is used by the app to verify the content of a file, Such signatures are also known as magic numbers or Magic Bytes. These Bytes are authenticated and cannot be changed.
+Fișierele criptate cu hat.sh sunt identificabile prin semnătura fișierului folosită de aplicație pentru a verifica conținutul unui fișier, astfel de semnături sunt cunoscute și ca numere magice sau Magic Bytes. Acesti Bytes sunt autentificate și nu pot fi schimbate.
 
-### Safari and Mobile Browsers
+### Browsere Safari și Mobile
 
-Safari and Mobile browsers are limited to a single file with maximum size of 1GB due to some issues related to service-workers. In addition, this limitation also applies when the app fails to register the service-worker (e.g FireFox Private Browsing).
+Browserele Safari și de cele pentru telefoane mobile sunt limitate la un singur fișier cu dimensiunea maximă de 1GB din cauza unor probleme legate de service-workers. În plus, această limitare se aplică și atunci când aplicația nu reușește să înregistreze service-worker-ul (de exemplu, FireFox Private Browsing).
 
 <br>
 
-# [Best Practices](#best-practices)
+# [Cele mai bune practici](#best-practices)
 
 ---
 
-### Choosing Passwords
+### Alegerea Parolelor
 
-The majority of individuals struggle to create and remember passwords, resulting in weak passwords and password reuse. Password-based encryption is substantially less safe as a result of these improper practices. That's why it is recommended to use the built in password generator and use a password manager like [Bitwarden], where you are able to store the safe password.
+Majoritatea indivizilor se confruntă cu dificultăți în a crea și a memora parole, rezultând în parole slabe și reutilizarea parolelor. Criptarea bazată pe parolă este considerabil mai puțin sigură din cauza acestor practici necorespunzătoare. De aceea este recomandat să folosești generatorul de parole încorporat și să folosești un manager de parole precum [Bitwarden], unde poți stoca parola sigură.
 
-
-If you want to choose a password that you are able to memorize then you should type a passphrase made of 8 words or more.
-
-<br>
-
-### Using public key encryption instead of a password
-
-If you are encrypting a file that you are going to share it with someone else then you probably should encrypt it with the recipient public key and your private key.
+Dacă dorești să alegi o parolă pe care să o poți memora, ar trebui să tastezi o frază din 8 cuvinte sau mai mult.
 
 <br>
 
-### Sharing Encrypted Files
+### Folosirea criptării cu chei publice în loc de parolă
 
-If you plan on sending someone an encrypted file, it is recommended to use your private key and their public key to encrypt the file.
-
-The file can be shared in any safe file sharing app.
+Dacă criptezi un fișier pe care intenționezi să îl partajezi cu altcineva, atunci ar trebui să îl criptezi cu cheia publică a destinatarului și cheia ta privată.
 
 <br>
 
-### Sharing the public key
+### Partajarea Fișierelor Criptate
 
-Public keys are allowed to be shared, they can be sent as `.public` file or as text.
+Dacă intenționezi să trimiți cuiva un fișier criptat, se recomandă să folosești cheia ta privată și cheia publică a destinatarului pentru a cripta fișierul.
 
-> Never share your private key to anyone! Only public keys should be exchanged.
-
-<br>
-
-### Storing the Public & Private keys
-
-Make sure to store your encryption keys in a safe place and make a backup to an external storage.
-
-Storing your private key in cloud storage is not recommended!
+Fișierul poate fi partajat în orice aplicație de partajare a fișierelor sigură.
 
 <br>
 
-### Sharing Decryption Passwords
+### Partajarea cheii publice
 
-Sharing decryption password can be done using a safe end-to-end encrypted messaging app. It's recommended to use a _Disappearing Messages_ feature, and to delete the password after the recipient has decrypted the file.
+Cheile publice pot fi partajate, ele pot fi trimise ca fișier `.public` sau ca text.
 
-> Never choose the same password for different files.
+> Nu împărtăși niciodată cheia ta privată cu nimeni! Doar cheile publice ar trebui schimbate.
 
 <br>
 
-# [FAQ](#faq)
+### Stocarea Cheilor Publice și Private
+
+Asigură-te că stochezi cheile tale de criptare într-un loc sigur și fă un backup pe un mediu de stocare extern.
+
+Stocarea cheii private în cloud nu este recomandată!
+
+<br>
+
+### Partajarea Parolelor de Decriptare
+
+Partajarea parolei de decriptare poate fi făcută folosind o aplicație de mesagerie criptată end-to-end sigură. Se recomandă utilizarea unei funcții de _Mesaje care dispar_ și ștergerea parolei după ce destinatarul a decriptat fișierul
+
+.
+
+> Nu alege niciodată aceeași parolă pentru fișiere diferite.
+
+<br>
+
+# [Întrebări frecvente](#faq)
 
 ---
 
-### Does the app log or store any of my data?
+### Aplicația înregistrează sau stochează datele mele?
 
-No, hat.sh never stores any of your data. It only runs locally in your browser.
-
-<hr style="height: 1px">
-
-### Is hat.sh free?
-
-Yes, Hat.sh is free and always will be. However, please consider [donating](https://github.com/sh-dv/hat.sh#donations) to support the project.
+Nu, hat.sh nu stochează niciodată datele tale. Rulează doar local în browserul tău.
 
 <hr style="height: 1px">
 
-### Which file types are supported? Is there a file size limit?
+### Hat.sh este gratuit?
 
-Hat.sh accepts all file types. There's no file size limit, meaning files of any size can be encrypted.
-
-Safari browser and mobile/smartphones browsers are limited to 1GB.
+Da, Hat.sh este gratuit și va fi întotdeauna. Cu toate acestea, te rugăm să iei în considerare [donarea](https://github.com/sh-dv/hat.sh#donations) pentru a sprijini proiectul.
 
 <hr style="height: 1px">
 
-### I forgot my password, can I still decrypt my files?
+### Ce tipuri de fișiere sunt acceptate? Există o limită de dimensiune a fișierelor?
 
-No, we don't know your password. Always make sure to store your passwords in a password manager.
+Hat.sh acceptă toate tipurile de fișiere. Nu există o limită de dimensiune a fișierelor, ceea ce înseamnă că fișiere de orice dimensiune pot fi criptate.
 
-<hr style="height: 1px">
-
-### Why am I seeing a notice that says "You have limited experience (single file, 1GB)"?
-
-It means that your browser doesn't support the server-worker fetch api. Hence, you are limited to small size files. see [Limitations](#limitations) for more info.
-
-<hr style="height: 1px" id="why-need-private-key">
-
-### Is it safe to share my public key?
-
-Yes. Public keys are allowed to be shared, they can be sent as `.public` file or as text.
-
-But make sure to never share your private key with anyone!
+Browserul Safari și browserele mobile/smartphone sunt limitate la 1GB.
 
 <hr style="height: 1px">
 
-### Why the app asks for my private key in the public key encryption mode?
+### Am uitat parola, pot totuși să decriptez fișierele mele?
 
-Hat.sh uses authenticated encryption. The sender must provide their private key, a new shared key will be computed from both keys to encrypt the file. Recipient has to provide their private key when decrypting also. this way can verify that the encrypted file was not tampered with, and was sent from the real sender.
-
-<hr style="height: 1px">
-
-### I have lost my private key, is it possible to recover it?
-
-Nope. lost private keys cannot be recovered.
-
-Also, if you feel that your private key has been compromised (e.g accidentally shared / computer hacked) then you must decrypt all files that were encrypted with that key, generate a new keypair and re-encrypt the files.
+Nu, nu știm parola ta. Asigură-te întotdeauna că îți stochezi parolele într-un manager de parole.
 
 <hr style="height: 1px">
 
-### How do I generate a keypair (Public & Private)?
+### De ce văd un mesaj care spune "Ai o experiență limitată (fișier unic, 1GB)"?
 
-You can generate keys by visit the [key generate page](https://hat.sh/generate-keys), make sure to [store the keys safely](#best-practices).
+Înseamnă că browserul tău nu suportă server-worker fetch api. Prin urmare, ești limitat la fișiere de dimensiuni mici. vezi [Limitări](#limitations) pentru mai multe informații.
 
-<hr style="height: 1px">
+<hr style="height: 1px" id="de-ce-am-nevoie-de-cheia-privată">
 
-### Does the app measure password strength?
+### Este sigur să îmi partajez cheia publică?
 
-We use [zxcvbn](https://github.com/dropbox/zxcvbn) JS implementation to check the entropy of the password input, this entropy will be converted to score that will be displayed on screen.
+Da. Cheile publice pot fi partajate, ele pot fi trimise ca fișier `.public` sau ca text.
 
-<hr style="height: 1px">
-
-### Does the app connect to the internet?
-
-Once you visit the site and the page loads, it runs only offline.
+Dar asigură-te că nu împărtășești niciodată cheia ta privată cu nimeni!
 
 <hr style="height: 1px">
 
-### How can I contribute?
+### De ce aplicația cere cheia mea privată în modul de criptare cu cheie publică?
 
-Hat.sh is an open-source application. You can help make it better by making commits on GitHub. The project is maintained in my free time. [Donations](https://github.com/sh-dv/hat.sh#donations) of any size are appreciated.
-
-<hr style="height: 1px">
-
-### How do I report bugs?
-
-Please report bugs via [Github] by opening an issue labeled with "bug".
+Hat.sh folosește criptare autentificată. Expeditorul trebuie să furnizeze cheia sa privată, o nouă cheie partajată va fi calculată din ambele chei pentru a cripta fișierul. Destinatarul trebuie să furnizeze cheia sa privată atunci când decriptează. În acest fel, se poate verifica că fișierul criptat nu a fost modificat și a fost trimis de la expeditorul real.
 
 <hr style="height: 1px">
 
-### How do I report a security vulnerability?
+### Mi-am pierdut cheia privată, este posibil să o recuperez?
 
-If you identify a valid security issue, please write an email to hatsh-security@pm.me
+Nu. Cheile private pierdute nu pot fi recuperate.
 
-There is no bounty available at the moment, but your github account will be credited in the acknowledgements section in the app documentation.
-
-<hr style="height: 1px">
-
-### Why should I use hat.sh?
-
-1. The app uses fast modern secure cryptographic algorithms.
-2. It's super fast and easy to use.
-3. It runs in the browser, no need to setup or install anything.
-4. It's free opensource software and can be easily self hosted.
+De asemenea, dacă simți că cheia ta privată a fost compromisă (de exemplu, împărtășită accidental / computerul a fost hack-uit), atunci trebuie să decriptezi toate fișierele care au fost criptate cu acea cheie, să generezi o nouă pereche de chei și să recriptezi fișierele.
 
 <hr style="height: 1px">
 
-### When should I not use hat.sh?
+### Cum generează o pereche de chei (Publică și Privată)?
 
-1. If you want to encrypt a disk (e.g [VeraCrypt]).
-2. If you want to frequently access encrypted files (e.g [Cryptomator]).
-3. If you want to encrypt and sign files in the same tool. (e.g [Kryptor]).
-4. If you prefer a command line tool (e.g [Kryptor]).
-5. If you want something that adheres to industry standards, use [GPG].
+Poți genera chei vizitând [pagina de generare a cheilor](https://hat.sh/generate-keys), asigură-te că [stochezi cheile în siguranță](#best-practices)
+
+<hr style="height: 1px">
+
+### Aplicația măsoară puterea parolei?
+
+Folosim implementarea JS [zxcvbn](https://github.com/dropbox/zxcvbn) pentru a verifica entropia parolei introduse, această entropie va fi convertită într-un scor care va fi afișat pe ecran.
+
+<hr style="height: 1px">
+
+### Aplicația se conectează la internet?
+
+Odată ce vizitezi site-ul și pagina se încarcă, rulează doar offline.
+
+<hr style="height: 1px">
+
+### Cum pot să contribui?
+
+Hat.sh este o aplicație open-source. Poți ajuta la îmbunătățirea ei făcând commit-uri pe GitHub. Proiectul este întreținut în timpul meu liber. [Donațiile](https://github.com/sh-dv/hat.sh#donations) de orice dimensiune sunt apreciate.
+
+<hr style="height: 1px">
+
+### Cum raportez bug-uri?
+
+Te rog raportează bug-uri prin [Github] deschizând un issue etichetat cu "bug".
+
+<hr style="height: 1px">
+
+### Cum raportez o vulnerabilitate de securitate?
+
+Dacă identifici o problemă de securitate validă, te rog să scrii un email la hatsh-security@pm.me
+
+Nu există nicio recompensă disponibilă în acest moment, dar contul tău de github va fi creditat în secțiunea de recunoașteri din documentația aplicației.
+
+<hr style="height: 1px">
+
+### De ce ar trebui să folosesc hat.sh?
+
+1. Aplicația folosește algoritmi criptografici moderni și siguri.
+2. Este super rapidă și ușor de utilizat.
+3. Rulează în browser, nu este nevoie să configurezi sau să instalezi nimic.
+4. Este un software gratuit open-source și poate fi găzduit cu ușurință.
+
+<hr style="height: 1px">
+
+### Când nu ar trebui să folosesc hat.sh?
+
+1. Dacă dorești să criptezi un disc (de exemplu, [VeraCrypt]).
+2. Dacă dorești să accesezi frecvent fișierele criptate (de exemplu, [Cryptomator]).
+3. Dacă dorești să criptezi și să semnezi fișiere în același instrument. (de exemplu, [Kryptor]).
+4. Dacă preferi un instrument de linie de comandă (de exemplu, [Kryptor]).
+5. Dacă dorești ceva care aderă la standardele industriei, folosește [GPG].
 
 <br>
 
-# [Technical Details](#technical-details)
+# [Detalii Tehnice](#technical-details)
 
 ---
 
-### Password hashing and Key derivation
+### Hashing-ul Parolei și Derivarea Cheilor
 
-Password hashing functions derive a secret key of any size from a password and a salt.
+Funcțiile de hashing ale parolelor derivă o cheie secretă de orice dimensiune dintr-o parolă și un salt.
 
 <br>
 
@@ -437,27 +437,27 @@ let key = sodium.crypto_pwhash(
 
 </div>
 
-The `crypto_pwhash()` function derives an 256 bits long key from a password and a salt salt whose fixed length is 128 bits, which should be unpredictable.
+Funcția `crypto_pwhash()` derivă o cheie lungă de 256 biți dintr-o parolă și un salt a cărui lungime fixă este de 128 biți, care ar trebui să fie impredictibil.
 
-`randombytes_buf()` is the easiest way to fill the 128 bits of the salt.
-
-<br>
-
-`OPSLIMIT` represents a maximum amount of computations to perform.
-
-`MEMLIMIT` is the maximum amount of RAM that the function will use, in bytes.
+`randombytes_buf()` este cea mai simplă modalitate de a umple cei 128 biți ai saltului.
 
 <br>
 
-`crypto_pwhash_OPSLIMIT_INTERACTIVE` and `crypto_pwhash_MEMLIMIT_INTERACTIVE` provide base line for these two parameters. This currently requires 64 MiB of dedicated RAM. which is suitable for in-browser operations.
-<br>
-`crypto_pwhash_ALG_ARGON2ID13` using the Argon2id algorithm version 1.3.
+`OPSLIMIT` reprezintă o cantitate maximă de calcule de efectuat.
+
+`MEMLIMIT` este cantitatea maximă de RAM pe care funcția o va folosi, în octeți.
 
 <br>
 
-### File Encryption (stream)
+`crypto_pwhash_OPSLIMIT_INTERACTIVE` și `crypto_pwhash_MEMLIMIT_INTERACTIVE` furnizează linia de bază pentru acești doi parametri. Acest lucru necesită în prezent 64 MiB de RAM dedicată. ceea ce este potrivit pentru operațiunile din browser.
+<br>
+`crypto_pwhash_ALG_ARGON2ID13` folosește algoritmul Argon2id versiunea 1.3.
 
-In order to use the app to encrypt a file, the user has to provide a valid file and a password. this password gets hashed and a secure key is derived from it with Argon2id to encrypt the file.
+<br>
+
+### Criptarea Fișierelor (stream)
+
+Pentru a folosi aplicația pentru a cripta un fișier, utilizatorul trebuie să furnizeze un fișier valid și o parolă. această parolă este hash-uită și o cheie sigură este derivată din ea cu Argon2id pentru a cripta fișierul.
 
 <br>
 
@@ -484,27 +484,29 @@ stream.enqueue(signature, salt, header, encryptedChunk);
 
 </div>
 
-The `crypto_secretstream_xchacha20poly1305_init_push` function creates an encrypted stream where it initializes a `state` using the key and an internal, automatically generated initialization vector. It then stores the stream header into `header` that has a size of 192 bits.
+Funcția `crypto_secretstream_xchacha20poly1305_init_push` creează un flux criptat unde inițializează un `state` folosind cheia și un vector de inițializare intern, generat automat. Apoi stochează antetul fluxului în `
 
-This is the first function to call in order to create an encrypted stream. The key will not be required any more for subsequent operations.
+header` care are o dimensiune de 192 biți.
+
+Aceasta este prima funcție de apelat pentru a crea un flux criptat. Cheia nu va mai fi necesară pentru operațiunile ulterioare.
 
 <br>
 
-An encrypted stream starts with a short header, whose size is 192 bits. That header must be sent/stored before the sequence of encrypted messages, as it is required to decrypt the stream. The header content doesn't have to be secret because decryption with a different header would fail.
+Un flux criptat începe cu un antet scurt, a cărui dimensiune este de 192 biți. Acest antet trebuie trimis/stocat înainte de secvența de mesaje criptate, deoarece este necesar pentru decriptarea fluxului. Conținutul antetului nu trebuie să fie secret deoarece decriptarea cu un antet diferit ar eșua.
 
-A tag is attached to each message accoring to the value of `last`, which indicates if that is the last chunk of the file or not. That tag can be any of:
+Un tag este atașat fiecărei mesaje în funcție de valoarea `last`, care indică dacă acesta este ultimul fragment al fișierului sau nu. Acest tag poate fi oricare dintre:
 
-1. `crypto_secretstream_xchacha20poly1305_TAG_MESSAGE`: This doesn't add any information about the nature of the message.
-2. `crypto_secretstream_xchacha20poly1305_TAG_FINAL`: This indicates that the message marks the end of the stream, and erases the secret key used to encrypt the previous sequence.
+1. `crypto_secretstream_xchacha20poly1305_TAG_MESSAGE`: Acesta nu adaugă nicio informație despre natura mesajului.
+2. `crypto_secretstream_xchacha20poly1305_TAG_FINAL`: Acesta indică faptul că mesajul marchează sfârșitul fluxului și șterge cheia secretă utilizată pentru a cripta secvența anterioară.
 
-The `crypto_secretstream_xchacha20poly1305_push()` function encrypts the file `chunk` using the `state` and the `tag`, without any additional information (`null`).
+Funcția `crypto_secretstream_xchacha20poly1305_push()` criptează fragmentul de fișier `chunk` folosind `state` și `tag`, fără informații suplimentare (`null`).
 <br>
 
-the XChaCha20 stream cipher Poly1305 MAC authentication are used for encryption.
+XChaCha20 stream cipher și Poly1305 MAC authentication sunt folosite pentru criptare.
 
-`stream.enqueue()` function adds the hat.sh signature(magic bytes), salt and header followed by the encrypted chunks.
+Funcția `stream.enqueue()` adaugă semnătura hat.sh (magic bytes), salt și antet urmate de fragmentele criptate.
 
-### File Decryption (stream)
+### Decriptarea Fișierelor (stream)
 
 <div class="codeBox">
 
@@ -521,28 +523,28 @@ if (result) {
   stream.enqueue(decryptedChunk);
 
   if (!last) {
-    // continue decryption
+    // continuă decriptarea
   }
 }
 ```
 
 </div>
 
-The `crypto_secretstream_xchacha20poly1305_init_pull()` function initializes a state given a secret `key` and a `header`. The key is derived from the password provided during the decryption, and the header sliced from the file. The key will not be required any more for subsequent operations.
+Funcția `crypto_secretstream_xchacha20poly1305_init_pull()` inițializează un state dat un `key` secret și un `header`. Cheia este derivată din parola furnizată în timpul decriptării și antetul decupat din fișier. Cheia nu va mai fi necesară pentru operațiunile ulterioare.
 
 <br>
 
-The `crypto_secretstream_xchacha20poly1305_pull()` function verifies that the `chunk` contains a valid ciphertext and authentication tag for the given `state`.
+Funcția `crypto_secretstream_xchacha20poly1305_pull()` verifică faptul că `chunk` conține un ciphertext valid și un tag de autentificare pentru `state` dat.
 
-This function will stay in a loop, until a message with the `crypto_secretstream_xchacha20poly1305_TAG_FINAL` tag is found.
+Această funcție va rămâne într-un buclă, până când un mesaj cu tag-ul `crypto_secretstream_xchacha20poly1305_TAG_FINAL` este găsit.
 
-If the decryption key is incorrect the function returns an error.
+Dacă cheia de decriptare este incorectă, funcția returnează o eroare.
 
-If the ciphertext or the authentication tag appear to be invalid it returns an error.
+Dacă ciphertext-ul sau tag-ul de autentificare par a fi invalide, returnează o eroare.
 
 <br>
 
-### Random password generation
+### Generarea Parolelor Aleatorii
 
 <div class="codeBox">
 
@@ -556,13 +558,13 @@ return password;
 
 </div>
 
-The `randombytes_buf()` function fills 128 bits starting at buf with an unpredictable sequence of bytes.
+Funcția `randombytes_buf()` umple 128 biți începând de la buf cu o secvență impredictibilă de octeți.
 
-The `to_base64()` function encodes buf as a Base64 string without padding.
+Funcția `to_base64()` encodează buf ca un șir Base64 fără padding.
 
 <br>
 
-### Keys generation and exchange
+### Generarea și Schimbul Cheilor
 
 <div class="codeBox">
 
@@ -576,7 +578,7 @@ return keys;
 ```
 </div>
 
-The `crypto_kx_keypair()` function randomly generates a secret key and a corresponding public key. The public key is put into publicKey and the secret key into privateKey. both of 256 bits.
+Funcția `crypto_kx_keypair()` generează aleatoriu o cheie secretă și o cheie publică corespunzătoare. Cheia publică este pusă în publicKey și cheia secretă în privateKey. ambele de 256 biți.
 
 <br>
 
@@ -591,38 +593,38 @@ let key = sodium.crypto_kx_client_session_keys(
 ```
 </div>
 
-Using the key exchange API, two parties can securely compute a set of shared keys using their peer's public key and their own secret key.
+Folosind API-ul de schimb de chei, două părți pot calcula în siguranță un set de chei partajate folosind cheia publică a peer-ului și cheia lor secretă.
 
-The `crypto_kx_client_session_keys()` function computes a pair of 256 bits long shared keys using the recipient's public key, the sender's private key.
+Funcția `crypto_kx_client_session_keys()` calculează o pereche de chei partajate lungi de 256 biți folosind cheia publică a destinatarului și cheia privată a expeditorului.
 
-The `crypto_scalarmult_base()` function used to compute the sender's public key from their private key.
+Funcția `crypto_scalarmult_base()` este folosită pentru a calcula cheia publică a expeditorului din cheia sa privată.
 
 <br>
 
 ### XChaCha20-Poly1305
 
-XChaCha20 is a variant of ChaCha20 with an extended nonce, allowing random nonces to be safe.
+XChaCha20 este o variantă a ChaCha20 cu un nonce extins, permițând nonce-urilor aleatorii să fie sigure.
 
-XChaCha20 doesn't require any lookup tables and avoids the possibility of timing attacks.
+XChaCha20 nu necesită tabele de căutare și evită posibilitatea atacurilor de sincronizare.
 
-Internally, XChaCha20 works like a block cipher used in counter mode. It uses the HChaCha20 hash function to derive a subkey and a subnonce from the original key and extended nonce, and a dedicated 64-bit block counter to avoid incrementing the nonce after each block.
+Intern, XChaCha20 funcționează ca un cifru de bloc utilizat în modul counter. Folosește funcția hash HChaCha20 pentru a deriva o subcheie și un subnonce din cheia originală și nonce-ul extins și un contor de blocuri dedicat de 64 de biți pentru a evita incrementarea nonce-ului după fiecare bloc.
 
 <br>
 
 ### V2 vs V1
 
-- switching to xchacha20poly1305 for symmetric stream encryption and Argon2id for password-based key derivation. instead of AES-256-GCM and PBKDF2.
-- using the libsodium library for all cryptography instead of the WebCryptoApi.
-- in this version, the app doesn't read the whole file in memory. instead, it's sliced into 64MB chunks that are processed one by one.
-- since we are not using any server-side processing, the app registers a fake download URL (/file) that is going to be handled by the service-worker fetch api.
-- if all validations are passed, a new stream is initialized. then, file chunks are transferred from the main app to the
-  service-worker file via messages.
-- each chunk is encrypted/decrypted on it's own and added to the stream.
-- after each chunk is written on disk it is going to be immediately garbage collected by the browser, this leads to never having more than a few chunks in the memory at the same time.
+- trecerea la xchacha20poly1305 pentru criptarea simetrică a fluxului și Argon2id pentru derivarea cheii bazate pe parolă. în loc de AES-256-GCM și PBKDF2.
+- utilizarea bibliotecii libsodium pentru toată criptografia în locul WebCryptoApi.
+- în această versiune, aplicația nu citește întregul fișier în memorie. în schimb, este împărțit în fragmente de 64MB care sunt procesate unul câte unul.
+- deoarece nu folosim procesarea pe server, aplicația înregistrează un URL de descărcare fals (/file) care va fi gestionat de service-worker fetch api.
+- dacă toate validările sunt trecute, un nou flux este inițializat. apoi, fragmentele de fișiere sunt transferate de la aplicația principală la
+  fișierul service-worker prin mesaje.
+- fiecare fragment este criptat/decriptat pe cont propriu și adăugat la flux.
+- după ce fiecare fragment este scris pe disc, acesta va fi imediat colectat de gunoi de către browser, acest lucru ducând la nu având niciodată mai mult de câteva fragmente în memorie în același timp.
 
 <br>
 
-[//]: # "links"
+[//]: # "linkuri"
 [xchacha20-poly1305]: https://libsodium.gitbook.io/doc/secret-key_cryptography/aead/chacha20-poly1305/xchacha20-poly1305_construction
 [argon2id]: https://github.com/p-h-c/phc-winner-argon2
 [x25519]: https://cr.yp.to/ecdh.html
