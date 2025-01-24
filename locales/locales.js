@@ -9,6 +9,7 @@ import es_ES from "./es_ES";
 import cs_CS from "./cs_CS";
 import tr_TR from "./tr_TR";
 import ja_JP from "./ja_JP";
+import ko_KR from "./ko_KR";
 
 const locales = {
   en_US,
@@ -21,7 +22,8 @@ const locales = {
   es_ES,
   cs_CS,
   tr_TR,
-  ja_JP
+  ja_JP,
+  ko_KR
 };
 
 export default locales;
