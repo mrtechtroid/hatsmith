@@ -362,7 +362,7 @@ You can generate keys by visit the [key generate page](https://hat.sh/generate-k
 
 ### Does the app measure password strength?
 
-We use [zxcvbn](https://github.com/dropbox/zxcvbn) JS implementation to check the entropy of the password input, this entropy will be converted to score that will be displayed on screen.
+We use [zxcvbn-ts/zxcvbn](https://github.com/zxcvbn-ts/zxcvbn) ~~[zxcvbn](https://github.com/dropbox/zxcvbn)~~ JS implementation to check the entropy of the password input, this entropy will be converted to score that will be displayed on screen.
 
 <hr style="height: 1px">
 
