@@ -343,7 +343,7 @@ export default function About(props) {
 
               <Typography variant="h6" className={classes.logo}>
                 <a href="/">
-                  <img src="/assets/images/logo.png" alt="logo" width="40" />
+                  <img src="/assets/images/logo_new.png" alt="logo" width="40" />
                 </a>
               </Typography>
 

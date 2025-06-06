@@ -60,7 +60,7 @@ const LoadingCom = (props) => {
         <div className={classes.circle}></div>
         <img
           className={classes.loadingImg}
-          src="/assets/images/logo.png"
+          src="/assets/images/logo_new.png"
           alt="Loading..."
         />
 

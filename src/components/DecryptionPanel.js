@@ -813,7 +813,7 @@ export default function DecryptionPanel() {
           style={{ color: "#fff", textAlign: "center" }}
         >
           <img
-            src="/assets/images/logo2.png"
+            src="/assets/images/logo_new.png"
             width="100"
             height="100"
             alt="hat.sh logo"

@@ -34,7 +34,7 @@ export default function NavAppBar() {
           <Toolbar>
             <Typography variant="h6" className={classes.logo}>
               <a href="/">
-                <img src="/assets/images/logo.png" alt="logo" width="40" />
+                <img src="/assets/images/logo_new.png" alt="logo" width="40" />
               </a>
               <VersionBadge />
             </Typography>
@@ -44,7 +44,7 @@ export default function NavAppBar() {
             </Button>
 
             <IconButton
-              href="https://github.com/sh-dv/hat.sh"
+              href="https://github.com/mrtechtroid/hatsmith"
               target="_blank"
               rel="noopener"
             >

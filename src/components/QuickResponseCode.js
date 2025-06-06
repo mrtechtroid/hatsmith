@@ -97,7 +97,7 @@ const QuickResponseCode = (props) => {
               includeMargin={true}
               renderAs={"canvas"}
               imageSettings={{
-                src: "/assets/icons/qr-logo.png",
+                src: "/assets/icons/qr-logo_new.png",
                 x: null,
                 y: null,
                 height: 40,

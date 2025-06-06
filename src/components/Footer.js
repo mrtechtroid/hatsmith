@@ -155,7 +155,27 @@ export default function Footer() {
       <footer className={classes.footer}>
         <Container maxWidth="sm">
           <Typography variant="body1">
-            Built and developed by{" "}
+            Maintained by {" "}
+            <Link
+              href="https://github.com/mrtechtroid"
+              target="_blank"
+              rel="noopener"
+              color="inherit"
+            >
+              {"mrtechtroid"}
+            </Link>
+          </Typography>
+          <Typography variant="body1">
+            Hatsmith is a fork of{" "}
+            <Link
+              href="https://github.com/sh-dv/hat.sh"
+              target="_blank"
+              rel="noopener"
+              color="inherit"
+            >
+              {"hat.sh"}
+            </Link>
+            {" "}by {" "}
             <Link
               href="https://github.com/sh-dv"
               target="_blank"
@@ -165,12 +185,11 @@ export default function Footer() {
               {"sh-dv"}
             </Link>
           </Typography>
-
-          <Chip
+          {/* <Chip
             size="small"
             className={classes.chip}
             avatar={
-              <Avatar src={`/assets/icons/${currAvatar}-logo.png`}></Avatar>
+              <Avatar src={`/assets/icons/${currAvatar}-logo_new.png`}></Avatar>
             }
             label="Donations Accepted"
             clickable
@@ -235,7 +254,7 @@ export default function Footer() {
                       renderAs={"canvas"}
                       includeMargin={true}
                       imageSettings={{
-                        src: `/assets/icons/${res.alt}-logo.png`,
+                        src: `/assets/icons/${res.alt}-logo_new.png`,
                         x: null,
                         y: null,
                         height: 40,
@@ -287,10 +306,10 @@ export default function Footer() {
                 {t("close")}
               </Button>
             </DialogActions>
-          </Dialog>
+          </Dialog> */}
         </Container>
       </footer>
-      <Hidden xsDown>
+      {/* <Hidden xsDown>
         <Snackbar
           style={{ zIndex: 1 }}
           anchorOrigin={{
@@ -334,7 +353,7 @@ export default function Footer() {
             {t("donation_message")}
           </Alert>
         </Snackbar>
-      </Hidden>
+      </Hidden> */}
     </div>
   );
 }

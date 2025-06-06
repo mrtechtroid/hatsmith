@@ -1,5 +1,10 @@
 # [CHANGELOG](#changelog)
 
+## v2.3.7
+
+- Update packages
+- Rebrand to Hatsmith
+
 ---
 ## v2.3.6
 
