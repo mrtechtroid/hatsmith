@@ -9,3 +9,8 @@ export const generatePassword = async () => {
   );
   return password;
 };
+
+export const generatePassPhrase = () =>{
+  const passphrase = generate();
+
+}

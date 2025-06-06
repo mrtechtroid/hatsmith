@@ -39,6 +39,7 @@ const en_US = {
   file: "file",
   files: "files",
   password: "Password",
+  passphrase: "Passphrase",
   public_key: "Public key",
   private_key: "Private key",
   drag_drop: "Drag & Drop or Browse file",

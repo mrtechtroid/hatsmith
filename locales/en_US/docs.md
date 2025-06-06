@@ -1,8 +1,9 @@
 # [Introduction](#introduction)
 
 ---
+[Hatsmith](https://hatsmith.vercel.app) is a web app that provides secure local file encryption in the browser. It's fast, secure, and uses modern cryptographic algorithms with chunked AEAD stream encryption/decryption.
 
-Hat.sh is a free [opensource] web app that provides secure file encryption in the browser.
+Hatsmith is a fork of [Hat.sh](https://github.com/sh-dv/hat.sh), created by sh-dv, and other contributors. Hatsmith will be a drop-in replacement for Hat.sh, with the same features and security guarantees, and will keep the same versioning scheme.
 
 <br>
 
@@ -55,13 +56,13 @@ Before installation make sure you are running [nodejs](https://nodejs.org/en/) a
 1. clone the github repository
 
 ```bash
-git clone https://github.com/sh-dv/hat.sh.git hat.sh
+git clone https://github.com/mrtechtroid/hatsmith.git hatsmith
 ```
 
 2. move to the folder
 
 ```bash
-cd hat.sh
+cd hatsmith
 ```
 
 3. install dependencies
@@ -101,7 +102,8 @@ You can install the app with docker in multiple ways. You are free to choose whi
 
 <br>
 
-- #### install from docker hub
+<!-- - #### install from docker hub
+(Hatsmith is not yet available on docker hub yet, but you can use the docker image from the github repository)
 
 1. pull image from docker hub
 
@@ -115,32 +117,32 @@ docker pull shdv/hat.sh:latest
 docker run -d -p 3991:80 shdv/hat.sh
 ```
 
-<br>
+<br> -->
 
 - #### Build an image from source
 
 1. clone the github repository
 
 ```bash
-git clone https://github.com/sh-dv/hat.sh.git hat.sh
+git clone https://github.com/mrtechtroid/hatsmith.git hatsmith
 ```
 
 2. move to the folder
 
 ```bash
-cd hat.sh
+cd hatsmith
 ```
 
 3. build image using docker
 
 ```bash
-docker build . -t shdv/hat.sh
+docker build . -t mrtechtroid/hatsmith
 ```
 
 4. run container
 
 ```bash
-docker run -d -p 3991:80 shdv/hat.sh
+docker run -d -p 3991:80 mrtechtroid/hatsmith
 ```
 
 <br>
@@ -150,13 +152,13 @@ docker run -d -p 3991:80 shdv/hat.sh
 1. clone the github repository
 
 ```bash
-git clone https://github.com/sh-dv/hat.sh.git hat.sh
+git clone https://github.com/mrtechtroid/hatsmith.git hatsmith
 ```
 
 2. move to the folder
 
 ```bash
-cd hat.sh
+cd hatsmith
 ```
 
 3. build image using docker compose
@@ -175,7 +177,7 @@ docker compose up
 
 The app should be running on port 3991.
 
-hat.sh is also available as a Docker image. You can find it on [Docker Hub].
+<!-- hat.sh is also available as a Docker image. You can find it on [Docker Hub]. -->
 
 <br>
 
@@ -188,7 +190,7 @@ hat.sh is also available as a Docker image. You can find it on [Docker Hub].
 
 - ### using a password
 
-1. Open hat.sh.
+1. Open Hatsmith.
 2. Navigate to the Encryption panel.
 3. Drag & Drop or Select the files that you wish to encrypt.
 4. Enter a password or generate one.
@@ -198,7 +200,7 @@ hat.sh is also available as a Docker image. You can find it on [Docker Hub].
 
 - ### using public and private keys
 
-1. Open hat.sh.
+1. Open Hatsmith.
 2. Navigate to the Encryption panel.
 3. Drag & Drop or Select the files that you wish to encrypt.
 4. Choose public key method.
@@ -215,7 +217,7 @@ hat.sh is also available as a Docker image. You can find it on [Docker Hub].
 
 - ### using a password
 
-1. Open hat.sh.
+1. Open Hatsmith.
 2. Navigate to the Decryption panel.
 3. Drag & Drop or Select the files that you wish to decrypt.
 4. Enter the encryption password.
@@ -223,7 +225,7 @@ hat.sh is also available as a Docker image. You can find it on [Docker Hub].
 
 - ### using public and private keys
 
-1. Open hat.sh.
+1. Open Hatsmith.
 2. Navigate to the Decryption panel.
 3. Drag & Drop or Select the files that you wish to decrypt.
 4. Enter or load sender's public key and your private key.
@@ -237,7 +239,7 @@ hat.sh is also available as a Docker image. You can find it on [Docker Hub].
 
 ### File Signature
 
-Files encrypted with hat.sh are identifiable by looking at the file signature that is used by the app to verify the content of a file, Such signatures are also known as magic numbers or Magic Bytes. These Bytes are authenticated and cannot be changed.
+Files encrypted with Hatsmith are identifiable by looking at the file signature that is used by the app to verify the content of a file, Such signatures are also known as magic numbers or Magic Bytes. These Bytes are authenticated and cannot be changed.
 
 ### Safari and Mobile Browsers
 
@@ -302,19 +304,20 @@ Sharing decryption password can be done using a safe end-to-end encrypted messag
 
 ### Does the app log or store any of my data?
 
-No, hat.sh never stores any of your data. It only runs locally in your browser.
+No, Hatsmith never stores any of your data. It only runs locally in your browser.
 
 <hr style="height: 1px">
 
-### Is hat.sh free?
+### Is Hatsmith free?
 
-Yes, Hat.sh is free and always will be. However, please consider [donating](https://github.com/sh-dv/hat.sh#donations) to support the project.
+Yes, Hatsmith is free and always will be. 
+<!-- However, please consider [donating](https://github.com/sh-dv/hat.sh#donations) to support the project. -->
 
 <hr style="height: 1px">
 
 ### Which file types are supported? Is there a file size limit?
 
-Hat.sh accepts all file types. There's no file size limit, meaning files of any size can be encrypted.
+Hatsmith accepts all file types. There's no file size limit, meaning files of any size can be encrypted.
 
 Safari browser and mobile/smartphones browsers are limited to 1GB.
 
@@ -342,7 +345,7 @@ But make sure to never share your private key with anyone!
 
 ### Why the app asks for my private key in the public key encryption mode?
 
-Hat.sh uses authenticated encryption. The sender must provide their private key, a new shared key will be computed from both keys to encrypt the file. Recipient has to provide their private key when decrypting also. this way can verify that the encrypted file was not tampered with, and was sent from the real sender.
+Hatsmith uses authenticated encryption. The sender must provide their private key, a new shared key will be computed from both keys to encrypt the file. Recipient has to provide their private key when decrypting also. this way can verify that the encrypted file was not tampered with, and was sent from the real sender.
 
 <hr style="height: 1px">
 
@@ -356,7 +359,7 @@ Also, if you feel that your private key has been compromised (e.g accidentally s
 
 ### How do I generate a keypair (Public & Private)?
 
-You can generate keys by visit the [key generate page](https://hat.sh/generate-keys), make sure to [store the keys safely](#best-practices).
+You can generate keys by visit the [key generate page](https://hatsmith.vercel.app/generate-keys), make sure to [store the keys safely](#best-practices).
 
 <hr style="height: 1px">
 
@@ -374,7 +377,8 @@ Once you visit the site and the page loads, it runs only offline.
 
 ### How can I contribute?
 
-Hat.sh is an open-source application. You can help make it better by making commits on GitHub. The project is maintained in my free time. [Donations](https://github.com/sh-dv/hat.sh#donations) of any size are appreciated.
+Hatsmith is an open-source application. You can help make it better by making commits on GitHub. The project is maintained in my free time. 
+<!-- [Donations](https://github.com/sh-dv/hat.sh#donations) of any size are appreciated. -->
 
 <hr style="height: 1px">
 
@@ -392,7 +396,7 @@ There is no bounty available at the moment, but your github account will be cred
 
 <hr style="height: 1px">
 
-### Why should I use hat.sh?
+### Why should I use Hatsmith?
 
 1. The app uses fast modern secure cryptographic algorithms.
 2. It's super fast and easy to use.
@@ -401,7 +405,7 @@ There is no bounty available at the moment, but your github account will be cred
 
 <hr style="height: 1px">
 
-### When should I not use hat.sh?
+### When should I not use Hatsmith?
 
 1. If you want to encrypt a disk (e.g [VeraCrypt]).
 2. If you want to frequently access encrypted files (e.g [Cryptomator]).
@@ -502,7 +506,7 @@ The `crypto_secretstream_xchacha20poly1305_push()` function encrypts the file `c
 
 the XChaCha20 stream cipher Poly1305 MAC authentication are used for encryption.
 
-`stream.enqueue()` function adds the hat.sh signature(magic bytes), salt and header followed by the encrypted chunks.
+`stream.enqueue()` function adds the Hatsmith signature(magic bytes), salt and header followed by the encrypted chunks.
 
 ### File Decryption (stream)
 

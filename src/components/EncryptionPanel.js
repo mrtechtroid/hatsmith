@@ -349,11 +349,14 @@ export default function EncryptionPanel() {
   };
 
   const generatedPassword = async () => {
-    let generated = await generatePassword();
-    password = generated;
-    setPassword(generated);
-    setShortPasswordError(false);
-  };
+    if (encryptionMethod === "secretKey") {
+      let generated = await generatePassword();
+      password = generated;
+      setPassword(generated);
+      setShortPasswordError(false);
+    }
+    
+    };
 
   const handleFilesInput = (selectedFiles) => {
     selectedFiles = Array.from(selectedFiles);
@@ -813,6 +816,13 @@ export default function EncryptionPanel() {
                   onChange={() => handleRadioChange("secretKey")}
                 />
                 <FormControlLabel
+                  value="secretKey"
+                  control={<Radio color="default" />}
+                  label={t("passphrase")}
+                  labelPlacement="end"
+                  onChange={() => handleRadioChange("secretPhraseKey")}
+                />
+                <FormControlLabel
                   value="publicKey"
                   className="publicKeyInput"
                   control={<Radio color="default" />}
@@ -823,7 +833,7 @@ export default function EncryptionPanel() {
               </RadioGroup>
             </FormControl>
 
-            {encryptionMethod === "secretKey" && (
+            {encryptionMethod === "secretKey" || encryptionMethod === "secretPhraseKey" && (
               <TextField
                 required
                 error={shortPasswordError ? true : false}

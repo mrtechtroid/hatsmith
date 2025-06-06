@@ -317,7 +317,6 @@ export default function About(props) {
       </List>
     </div>
   );
-
   return (
     // <ThemeProvider theme={Theme}>
       <div className={classes.root}>
@@ -331,15 +330,6 @@ export default function About(props) {
         >
           <Container maxWidth="lg">
             <Toolbar>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge="start"
-                onClick={handleDrawerToggle}
-                className={classes.menuButton}
-              >
-                <MenuIcon />
-              </IconButton>
 
               <Typography variant="h6" className={classes.logo}>
                 <a href="/">
@@ -364,36 +354,7 @@ export default function About(props) {
           </Container>
         </AppBar>
 
-        <nav className={classes.drawer} aria-label="mailbox folders">
-          {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-          <Hidden smUp implementation="css">
-            <Drawer
-              variant="temporary"
-              anchor="left"
-              open={mobileOpen}
-              onClose={handleDrawerToggle}
-              classes={{
-                paper: classes.drawerPaper,
-              }}
-              ModalProps={{
-                keepMounted: true, // Better open performance on mobile.
-              }}
-            >
-              {drawer}
-            </Drawer>
-          </Hidden>
-          <Hidden xsDown implementation="css">
-            <Drawer
-              classes={{
-                paper: classes.drawerPaper,
-              }}
-              variant="permanent"
-              open
-            >
-              {drawer}
-            </Drawer>
-          </Hidden>
-        </nav>
+        
         <main className={classes.content}>
           <Container maxWidth="lg">
             <div className={classes.toolbar} />
