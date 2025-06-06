@@ -1,6 +1,6 @@
 {
   "name": "hatsmith",
-  "version": "2.3.7",
+  "version": "3.0.0",
   "private": true,
   "scripts": {
     "dev": "browserify service-worker/sw.js -o public/service-worker.js && next dev",
@@ -11,23 +11,32 @@
     "test": "cypress open"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
     "@material-ui/lab": "^4.0.0-alpha.61",
+    "@mui/icons-material": "^5.17.1",
+    "@mui/lab": "^5.0.0-alpha.176",
+    "@mui/material": "^5.17.1",
+    "@mui/styles": "^5.17.1",
     "@zxcvbn-ts/core": "^3.0.4",
     "@zxcvbn-ts/language-common": "^3.0.4",
     "@zxcvbn-ts/language-en": "^3.0.2",
+    "cypress": "^14.4.1",
     "libsodium-wrappers": "^0.7.10",
     "marked": "4.0.16",
     "next": "^12.1.6",
     "prismjs": "^1.28.0",
     "qrcode.react": "^1.0.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-dropzone": "^14.2.1"
   },
   "devDependencies": {
     "browserify": "^17.0.0",
+    "cypress-file-upload": "^5.0.8",
+    "cypress-real-events": "^1.14.0",
     "eslint": "8.15.0",
     "eslint-config-next": "12.1.6"
   }

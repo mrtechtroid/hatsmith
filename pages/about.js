@@ -5,37 +5,37 @@ import path from "path";
 import { marked } from "marked";
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import AppBar from "@material-ui/core/AppBar";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Divider from "@material-ui/core/Divider";
-import Drawer from "@material-ui/core/Drawer";
-import Hidden from "@material-ui/core/Hidden";
-import IconButton from "@material-ui/core/IconButton";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import MenuIcon from "@material-ui/icons/Menu";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import AppBar from "@mui/material/AppBar";
+import CssBaseline from "@mui/material/CssBaseline";
+import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
+import Hidden from "@mui/material/Hidden";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import MenuIcon from "@mui/icons-material/Menu";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import { makeStyles, useTheme } from "@mui/styles";
 import Link from "next/link";
-import Container from "@material-ui/core/Container";
-import Button from "@material-ui/core/Button";
-import GitHubIcon from "@material-ui/icons/GitHub";
+import Container from "@mui/material/Container";
+import Button from "@mui/material/Button";
+import GitHubIcon from "@mui/icons-material/GitHub";
 import Footer from "../src/components/Footer";
-import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
-import StarsIcon from "@material-ui/icons/Stars";
-import GetAppIcon from "@material-ui/icons/GetApp";
-import EmojiObjectsIcon from "@material-ui/icons/EmojiObjects";
-import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
-import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
-import MenuBookIcon from "@material-ui/icons/MenuBook";
-import LiveHelpIcon from "@material-ui/icons/LiveHelp";
-import HistoryIcon from "@material-ui/icons/History";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import StarsIcon from "@mui/icons-material/Stars";
+import GetAppIcon from "@mui/icons-material/GetApp";
+import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import LiveHelpIcon from "@mui/icons-material/LiveHelp";
+import HistoryIcon from "@mui/icons-material/History";
 import prism from "prismjs";
 import Settings from "../src/components/Settings";
-import { ThemeProvider } from "@material-ui/styles";
+import { ThemeProvider } from "@mui/styles";
 import { Theme, checkTheme } from "../src/config/Theme";
 import locales from "../locales/locales";
 import { getTranslations as t } from "../locales";
@@ -53,7 +53,7 @@ marked.setOptions({
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: Theme.palette.alabaster.main,
+    backgroundColor: theme.palette.custom.alabaster.main,
     minHeight: "100vh",
   },
   drawer: {
@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   appBar: {
-    backgroundColor: Theme.palette.alabaster.main,
+    backgroundColor: theme.palette.custom.alabaster.main,
     [theme.breakpoints.up("sm")]: {
       width: "100%",
       marginLeft: drawerWidth,
@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     textTransform: "none",
-    color: Theme.palette.diamondBlack.main,
+    color: theme.palette.custom.diamondBlack.main,
   },
 
   menuButton: {
@@ -96,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
 
     "& h1": {
       marginTop: 20,
-      color: Theme.palette.mineShaft.main,
+      color: theme.palette.custom.mineShaft.main,
       borderRadius: "8px",
       paddingBottom: 15,
       "& a": {
@@ -109,7 +109,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     "& h2": {
-      color: Theme.palette.mineShaft.main,
+      color: theme.palette.custom.mineShaft.main,
       fontSize: "26px",
       paddingTop: 20,
       paddingBottom: 20,
@@ -117,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     "& h3": {
-      color: Theme.palette.mineShaft.main,
+      color: theme.palette.custom.mineShaft.main,
       fontSize: "24px",
       paddingTop: 20,
       paddingBottom: 20,
@@ -125,12 +125,12 @@ const useStyles = makeStyles((theme) => ({
     },
 
     "& a": {
-      color: Theme.palette.mineShaft.main,
+      color: theme.palette.custom.mineShaft.main,
     },
 
     "& p": {
       fontSize: "17px",
-      color: Theme.palette.mineShaft.main,
+      color: theme.palette.custom.mineShaft.main,
       lineHeight: 2,
       "& code": {
         backgroundColor: "#f1f1f1",
@@ -145,7 +145,7 @@ const useStyles = makeStyles((theme) => ({
     "& li": {
       padding: 2.5,
       fontSize: "18px",
-      color: Theme.palette.mineShaft.main,
+      color: theme.palette.custom.mineShaft.main,
       "& a": {
         textDecoration: "none",
         letterSpacing: "0.5px",
@@ -154,7 +154,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     "& hr": {
-      backgroundColor: Theme.palette.mercury.main,
+      backgroundColor: theme.palette.custom.mercury.main,
       border: "none",
       height: "1.5px",
       marginTop: 20,
@@ -199,7 +199,7 @@ const useStyles = makeStyles((theme) => ({
       borderRadius: "3px",
       overflow: "auto",
       "& code": {
-        color: Theme.palette.mineShaft.main,
+        color: theme.palette.custom.mineShaft.main,
       },
     },
 
@@ -319,7 +319,7 @@ export default function About(props) {
   );
 
   return (
-    <ThemeProvider theme={Theme}>
+    // <ThemeProvider theme={Theme}>
       <div className={classes.root}>
         <CssBaseline />
 
@@ -407,7 +407,7 @@ export default function About(props) {
 
         <Footer />
       </div>
-    </ThemeProvider>
+    // </ThemeProvider>
   );
 }
 

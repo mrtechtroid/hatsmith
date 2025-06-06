@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import { Button, Hidden } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
+import { makeStyles } from "@mui/styles";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { Button, Hidden } from "@mui/material";
+import { Alert } from "@mui/material";
 import { checkLocale } from "../../locales";
 import { getTranslations as t } from "../../locales";
 import locales from "../../locales/locales";

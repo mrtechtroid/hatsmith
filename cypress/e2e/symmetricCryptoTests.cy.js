@@ -3,29 +3,28 @@
 // Tests are done on chrome
 // Avoid running all test files at the same time
 
-import { currentVersion, APP_URL } from "../../src/config/Constants";
+import { currentVersion } from "../../src/config/Constants";
 import "cypress-file-upload";
 import "cypress-real-events/support";
 
 const path = require("path");
 const downloadsFolder = Cypress.config("downloadsFolder");
 
-let aliceKeys = { publicKey: null, privateKey: null };
-let bobKeys = { publicKey: null, privateKey: null };
+let encryptionPassword;
 
-describe("Asymmetric encryption test", () => {
+describe("Symmetric encryption test", () => {
   beforeEach(() => {
     //locate app in dev mode
     cy.visit('/');
 
     //displays app title
-    cy.contains("Hat.sh");
+    cy.contains("Hatsmith");
 
     //runs the correct version
     cy.contains(currentVersion);
   });
 
-  it("loads a file and generate keys for two parties then encrypt", () => {
+  it("loads a file and encrypt", () => {
     cy.wait(2500);
     // the paht of the tested file
     const file = "../files/document.txt";
@@ -40,65 +39,18 @@ describe("Asymmetric encryption test", () => {
     // generate random password
     cy.contains("Choose a strong Password");
     cy.get(".submitKeys").should("be.disabled");
-    cy.get(".publicKeyInput").realClick();
-    cy.contains("Generate now").realClick();
-    cy.get(".keyPairGenerateBtn").click();
-
-    // generate keys for alice and bob and assign to object
-    cy.get("#generatedPublicKey")
+    cy.get(".generatePasswordBtn").realClick();
+    // save the encryption password temporarily for later use in decryption
+    cy.get("#encPasswordInput")
       .invoke("val")
       .then((val) => {
-        aliceKeys.publicKey = val;
+        encryptionPassword = val;
+        cy.log(encryptionPassword);
       });
-
-    cy.get("#generatedPrivateKey")
-      .invoke("val")
-      .then((val) => {
-        aliceKeys.privateKey = val;
-      });
-
-    cy.log(aliceKeys);
-
-    cy.get(".keyPairGenerateBtn").click();
-
-    cy.get("#generatedPublicKey")
-      .invoke("val")
-      .then((val) => {
-        bobKeys.publicKey = val;
-      });
-
-    cy.get("#generatedPrivateKey")
-      .invoke("val")
-      .then((val) => {
-        bobKeys.privateKey = val;
-      });
-
-    cy.log(bobKeys);
-
-    // close key pair generation window
-    cy.get("#closeGenBtn").realClick();
-
-    cy.wait(500);
-
-    // enter decryption keys
-    cy.get("#public-key-input")
-      .realClick()
-      .then(() => {
-        // enter bob public key (recepient)
-        cy.realType(bobKeys.publicKey);
-      });
-
-    cy.get("#private-key-input")
-      .realClick()
-      .then(() => {
-        // enter alice private key (recepient)
-        cy.realType(aliceKeys.privateKey);
-      });
-
     cy.get(".submitKeys").realClick();
 
     cy.wait(500);
-    // click the encyption button after a file and keys were submitted
+    // click the encyption button after a file and pass were submitted
     cy.window()
       .document()
       .then(function (doc) {
@@ -128,7 +80,7 @@ describe("Asymmetric encryption test", () => {
     cy.readFile(encryptedFile).should("exist");
   });
 
-  it("loads a file and decrypt using the sender public key and the recepient private key", () => {
+  it("loads a file and decrypt", () => {
     // visit the decryption panel
     cy.visit(`${Cypress.config('baseUrl')}/?tab=decryption`);
     cy.wait(2500);
@@ -153,26 +105,11 @@ describe("Asymmetric encryption test", () => {
     cy.wait(500);
 
     // make sure file was submitted
-    cy.contains("Enter sender's Public key and your Private Key");
+    cy.contains("Enter the decryption password");
     cy.get(".submitKeysDec").should("be.disabled");
-
-    // enter the sender public key and the receiver private key
-    cy.wait(500);
-
-    cy.get("#public-key-input-dec")
-      .realClick()
-      .then(() => {
-        // enter bob public key (recepient)
-        cy.realType(aliceKeys.publicKey);
-      });
-
-    cy.get("#private-key-input-dec")
-      .realClick()
-      .then(() => {
-        // enter alice private key (recepient)
-        cy.realType(bobKeys.privateKey);
-      });
-
+    cy.get(".decPasswordInput").realClick();
+    // enter the encryption password that was used earlier
+    cy.realType(encryptionPassword);
     cy.get(".submitKeysDec").realClick();
 
     cy.wait(500);
@@ -187,7 +124,7 @@ describe("Asymmetric encryption test", () => {
           }, 2500);
         });
 
-        //make sure sw responded
+        // make sure sw responded
         cy.intercept("/", (req) => {
           req.reply((res) => {
             expect(res.statusCode).to.equal(200);
@@ -197,7 +134,7 @@ describe("Asymmetric encryption test", () => {
         cy.get(".downloadFileDec").realClick();
       });
 
-      cy.wait(2500);
+      cy.wait(5000);
   });
 
   it("verify the decrypted file path", () => {

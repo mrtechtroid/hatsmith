@@ -12,45 +12,45 @@ import {
 } from "../../config/Constants";
 import { formatBytes } from "../../helpers/formatBytes";
 import { computePublicKey } from "../../utils/computePublicKey";
-import { Alert, AlertTitle } from "@material-ui/lab";
-import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
-import StepContent from "@material-ui/core/StepContent";
-import Button from "@material-ui/core/Button";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import Tooltip from "@material-ui/core/Tooltip";
-import Backdrop from "@material-ui/core/Backdrop";
-import IconButton from "@material-ui/core/IconButton";
-import Snackbar from "@material-ui/core/Snackbar";
-import FileCopyIcon from "@material-ui/icons/FileCopy";
-import RefreshIcon from "@material-ui/icons/Refresh";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import DescriptionIcon from "@material-ui/icons/Description";
-import GetAppIcon from "@material-ui/icons/GetApp";
-import CachedIcon from "@material-ui/icons/Cached";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import AttachFileIcon from "@material-ui/icons/AttachFile";
-import LinkIcon from "@material-ui/icons/Link";
-import Collapse from "@material-ui/core/Collapse";
-import CloseIcon from "@material-ui/icons/Close";
+import { Alert, AlertTitle } from "@mui/material";
+import { makeStyles } from "@mui/styles";
+import Grid from "@mui/material/Grid";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import StepContent from "@mui/material/StepContent";
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import CircularProgress from "@mui/material/CircularProgress";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import Tooltip from "@mui/material/Tooltip";
+import Backdrop from "@mui/material/Backdrop";
+import IconButton from "@mui/material/IconButton";
+import Snackbar from "@mui/material/Snackbar";
+import FileCopyIcon from "@mui/icons-material/FileCopy";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import DescriptionIcon from "@mui/icons-material/Description";
+import GetAppIcon from "@mui/icons-material/GetApp";
+import CachedIcon from "@mui/icons-material/Cached";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import AttachFileIcon from "@mui/icons-material/AttachFile";
+import LinkIcon from "@mui/icons-material/Link";
+import Collapse from "@mui/material/Collapse";
+import CloseIcon from "@mui/icons-material/Close";
 import {
   List,
   ListItem,
   ListItemSecondaryAction,
   ListItemText,
-} from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import { getTranslations as t } from "../../../locales";
 
@@ -63,17 +63,17 @@ const useStyles = makeStyles((theme) => ({
   offline: {
     fontSize: 12,
     float: "right",
-    color: theme.palette.diamondBlack.main,
+    color: theme.palette.custom.diamondBlack.main,
   },
   stepper: {
     backgroundColor: "transparent",
   },
   stepIcon: {
     "&$activeStepIcon": {
-      color: theme.palette.emperor.main,
+      color: theme.palette.custom.emperor.main,
     },
     "&$completedStepIcon": {
-      color: theme.palette.emperor.main,
+      color: theme.palette.custom.emperor.main,
     },
   },
   activeStepIcon: {},
@@ -84,10 +84,10 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1),
     borderRadius: "8px",
     border: "none",
-    color: theme.palette.mineShaft.main,
-    backgroundColor: theme.palette.mercury.light,
+    color: theme.palette.custom.mineShaft.main,
+    backgroundColor: theme.palette.custom.mercury.light,
     "&:hover": {
-      backgroundColor: theme.palette.mercury.main,
+      backgroundColor: theme.palette.custom.mercury.main,
     },
     transition: "background-color 0.2s ease-out",
     transition: "color .01s",
@@ -100,10 +100,10 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "none",
     borderRadius: "8px",
     border: "none",
-    color: theme.palette.mineShaft.main,
-    backgroundColor: theme.palette.alto.light,
+    color: theme.palette.custom.mineShaft.main,
+    backgroundColor: theme.palette.custom.alto.light,
     "&:hover": {
-      backgroundColor: theme.palette.alto.main,
+      backgroundColor: theme.palette.custom.alto.main,
     },
     transition: "background-color 0.2s ease-out",
     transition: "color .01s",
@@ -113,7 +113,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
     marginRight: theme.spacing(1),
     borderRadius: "8px",
-    backgroundColor: theme.palette.mercury.main,
+    backgroundColor: theme.palette.custom.mercury.main,
     transition: "color .01s",
   },
   nextButton: {
@@ -121,9 +121,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1),
     borderRadius: "8px",
     backgroundColor: theme.palette.primary.main,
-    color: theme.palette.white.main,
+    color: theme.palette.custom.white.main,
     "&:hover": {
-      backgroundColor: theme.palette.mineShaft.main,
+      backgroundColor: theme.palette.custom.mineShaft.main,
     },
     transition: "color .01s",
   },
@@ -143,7 +143,7 @@ const useStyles = makeStyles((theme) => ({
   fileArea: {
     padding: "20px",
     border: "5px dashed",
-    borderColor: theme.palette.gallery.main,
+    borderColor: theme.palette.custom.gallery.main,
     borderRadius: "14px",
     display: "flex",
     alignItems: "center",

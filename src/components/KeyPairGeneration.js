@@ -1,21 +1,20 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Alert from "@material-ui/lab/Alert";
-import { AlertTitle } from "@material-ui/lab";
-import IconButton from "@material-ui/core/IconButton";
-import Collapse from "@material-ui/core/Collapse";
-import Button from "@material-ui/core/Button";
-import CloseIcon from "@material-ui/icons/Close";
-import { Typography } from "@material-ui/core";
-import { Paper, Grid, Tooltip } from "@material-ui/core";
-import CachedIcon from "@material-ui/icons/Cached";
-import { TextField } from "@material-ui/core";
-import GetAppIcon from "@material-ui/icons/GetApp";
+import { makeStyles } from "@mui/styles";
+import {Alert,AlertTitle} from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import Collapse from "@mui/material/Collapse";
+import Button from "@mui/material/Button";
+import CloseIcon from "@mui/icons-material/Close";
+import { Typography } from "@mui/material";
+import { Paper, Grid, Tooltip } from "@mui/material";
+import CachedIcon from "@mui/icons-material/Cached";
+import { TextField } from "@mui/material";
+import GetAppIcon from "@mui/icons-material/GetApp";
 import { generateAsymmetricKeys } from "../utils/generateAsymmetricKeys";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import Hidden from '@material-ui/core/Hidden';
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Hidden from '@mui/material/Hidden';
 import { getTranslations as t } from "../../locales";
 import QuickResponseCode from "./QuickResponseCode";
 
@@ -29,18 +28,18 @@ const useStyles = makeStyles((theme) => ({
   },
   generateNowText: {
     float: "right",
-    color: theme.palette.mountainMist.main,
+    color: theme.palette.custom.mountainMist.main,
     cursor: "pointer",
     textDecoration: "underline",
     marginLeft: 4,
   },
   caption: {
     float: "right",
-    color: theme.palette.mountainMist.main,
+    color: theme.palette.custom.mountainMist.main,
   },
   keyCaption: {
     float: "left",
-    color: theme.palette.mountainMist.main,
+    color: theme.palette.custom.mountainMist.main,
     marginLeft: 4,
     "&:hover": {
       cursor: "pointer",
@@ -52,10 +51,10 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1),
     borderRadius: "8px",
     border: "none",
-    color: theme.palette.denim.main,
-    backgroundColor: theme.palette.hawkesBlue.light,
+    color: theme.palette.custom.denim.main,
+    backgroundColor: theme.palette.custom.hawkesBlue.light,
     "&:hover": {
-      backgroundColor: theme.palette.hawkesBlue.main,
+      backgroundColor: theme.palette.custom.hawkesBlue.main,
     },
     transition: "background-color 0.2s ease-out",
     transition: "color .01s",

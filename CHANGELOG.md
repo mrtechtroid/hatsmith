@@ -5,7 +5,8 @@
 - Update packages
 - - Migrate from zxcvbn to [zxcvbn-ts/zxcvbn](https://github.com/zxcvbn-ts/zxcvbn) for password strength checking.
 - - Update cypress to v14.4.1
-- - 
+- - Update Material UI to v5
+- - Update to React 18
 - Rebrand to Hatsmith
 
 ---

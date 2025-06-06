@@ -1,25 +1,25 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import { useState, useEffect } from "react";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
-import FileCopyIcon from "@material-ui/icons/FileCopy";
-import Link from "@material-ui/core/Link";
-import { Chip, Avatar, Hidden } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import { IconButton, Tooltip, TextField } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
-import Snackbar from "@material-ui/core/Snackbar";
+import Typography from "@mui/material/Typography";
+import { makeStyles } from "@mui/styles";
+import Container from "@mui/material/Container";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import FileCopyIcon from "@mui/icons-material/FileCopy";
+import Link from "@mui/material/Link";
+import { Chip, Avatar, Hidden } from "@mui/material";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import { IconButton, Tooltip, TextField } from "@mui/material";
+import { Alert } from "@mui/material";
+import Snackbar from "@mui/material/Snackbar";
 import { getTranslations as t } from "../../locales";
 let QRCode = require("qrcode.react");
 
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
   footer: {
     textAlign: "center",
-    color: theme.palette.diamondBlack.main,
+    color: theme.palette.custom.diamondBlack.main,
     padding: theme.spacing(3, 2),
   },
 
@@ -48,13 +48,13 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 8,
     textTransform: "none",
     boxShadow: "none",
-    color: theme.palette.diamondBlack.main,
-    backgroundColor: theme.palette.alto.light,
+    color: theme.palette.custom.diamondBlack.main,
+    backgroundColor: theme.palette.custom.alto.light,
     "&:hover": {
-      backgroundColor: theme.palette.alto.main,
+      backgroundColor: theme.palette.custom.alto.main,
     },
     "&:focus": {
-      backgroundColor: theme.palette.alto.main,
+      backgroundColor: theme.palette.custom.alto.main,
       boxShadow: "none",
     },
     transition: "background-color 0.2s ease-out",
@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   monIcon: {
-    color: theme.palette.mountainMist.main,
+    color: theme.palette.custom.mountainMist.main,
   },
 
   qr: {

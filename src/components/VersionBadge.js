@@ -1,11 +1,11 @@
 import { currentVersion } from "../config/Constants";
-import { makeStyles } from "@material-ui/core/styles";
-import Chip from "@material-ui/core/Chip";
+import { makeStyles } from "@mui/styles";
+import Chip from "@mui/material/Chip";
 
 const useStyles = makeStyles((theme) => ({
   chip: {
-    backgroundColor: theme.palette.gallery.main,
-    color: theme.palette.mountainMist.main,
+    backgroundColor: theme.palette.custom.gallery.main,
+    color: theme.palette.custom.mountainMist.main,
     borderRadius: ".25rem",
     padding: "none",
     marginLeft: 15,

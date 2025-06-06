@@ -1,13 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
-import { makeStyles } from "@material-ui/core/styles";
-import Backdrop from "@material-ui/core/Backdrop";
+import { makeStyles } from "@mui/styles";
+import Backdrop from "@mui/material/Backdrop";
 
 const useStyles = makeStyles((theme) => ({
   backDrop: {
-    backgroundColor: theme.palette.alabaster.main,
+    backgroundColor: theme.palette.custom.alabaster.main,
     opacity: "96%",
     zIndex: 10,
-    color: theme.palette.mineShaft.main,
+    color: theme.palette.custom.mineShaft.main,
   },
 
   loadingWrapper: {

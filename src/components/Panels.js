@@ -3,11 +3,11 @@ import { useRouter } from "next/router";
 import PropTypes from "prop-types";
 import EncryptionPanel from "./EncryptionPanel";
 import DecryptionPanel from "./DecryptionPanel";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Container from "@material-ui/core/Container";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
+import { makeStyles, withStyles } from "@mui/styles";
+import AppBar from "@mui/material/AppBar";
+import Container from "@mui/material/Container";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
 import { getTranslations as t } from "../../locales";
 
 const StyledTabs = withStyles({
@@ -23,7 +23,7 @@ const StyledTab = withStyles((theme) => ({
     transition: "background-color 0.2s ease-out",
 
     "&$selected": {
-      backgroundColor: theme.palette.white.main,
+      backgroundColor: theme.palette.custom.white.main,
       boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
       borderRadius: "8px",
     },
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
   bar: {
     marginTop: 35,
-    backgroundColor: theme.palette.gallery.main,
+    backgroundColor: theme.palette.custom.gallery.main,
     borderRadius: "8px",
     padding: 8,
   },
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   tab: {
-    color: theme.palette.mineShaft.main,
+    color: theme.palette.custom.mineShaft.main,
   },
 }));
 

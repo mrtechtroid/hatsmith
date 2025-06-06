@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogActions from "@material-ui/core/DialogActions";
-import Button from "@material-ui/core/Button";
-import { Alert, AlertTitle } from "@material-ui/lab";
+import { makeStyles } from "@mui/styles";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogActions from "@mui/material/DialogActions";
+import Button from "@mui/material/Button";
+import { Alert, AlertTitle } from "@mui/material";
 import { getTranslations as t } from "../../locales";
 
 const useStyles = makeStyles((theme) => ({

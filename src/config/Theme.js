@@ -1,5 +1,5 @@
-import { createTheme } from "@material-ui/core/styles";
-import { FormControlLabel, Switch } from "@material-ui/core";
+import { createTheme } from "@mui/material/styles";
+import { FormControlLabel, Switch } from "@mui/material";
 import { useState } from "react";
 import { getTranslations as t } from "../../locales";
 
@@ -8,6 +8,7 @@ export const Theme = createTheme({
     primary: {
       main: "#464653",
     },
+    custom:{
     white: {
       main: "#ffffff",
     },
@@ -59,6 +60,7 @@ export const Theme = createTheme({
     },
     diamondBlack : {
       main: "rgba(0, 0, 0, 0.54)",
+    }
     }
   },
 });

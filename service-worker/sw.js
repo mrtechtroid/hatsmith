@@ -4,6 +4,21 @@ self.addEventListener("install", (event) =>
 self.addEventListener("activate", (event) =>
   event.waitUntil(self.clients.claim())
 );
+self.addEventListener('install', (event) => {
+  console.log('[SW] Installed');
+  self.skipWaiting();
+});
+self.addEventListener('activate', (event) => {
+  console.log('[SW] Activated');
+  event.waitUntil(self.clients.claim());
+});
+self.addEventListener('fetch', (event) => {
+  console.log('[SW] Fetch:', event.request.url);
+});
+
+self.addEventListener('message', (event) => {
+  console.log('[SW] Received message:', event.data);
+});
 
 const config = require("./config");
 
@@ -181,7 +196,7 @@ const _sodium = require("libsodium-wrappers");
       const SIGNATURE = new Uint8Array(
         config.encoder.encode(config.sigCodes["v2_asymmetric"])
       );
-
+      console.log(streamController)
       streamController.enqueue(SIGNATURE);
       streamController.enqueue(header);
 
