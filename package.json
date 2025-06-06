@@ -14,6 +14,9 @@
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
     "@material-ui/lab": "^4.0.0-alpha.61",
+    "@zxcvbn-ts/core": "^3.0.4",
+    "@zxcvbn-ts/language-common": "^3.0.4",
+    "@zxcvbn-ts/language-en": "^3.0.2",
     "libsodium-wrappers": "^0.7.10",
     "marked": "4.0.16",
     "next": "^12.1.6",
@@ -21,8 +24,7 @@
     "qrcode.react": "^1.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-dropzone": "^14.2.1",
-    "zxcvbn": "^4.4.2"
+    "react-dropzone": "^14.2.1"
   },
   "devDependencies": {
     "browserify": "^17.0.0",
