@@ -9,7 +9,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { IconButton, Tooltip, Button, TextField } from "@mui/material";
 import { getTranslations as t } from "../../locales";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
-let QRCode = require("qrcode.react");
+import {QRCodeSVG} from 'qrcode.react';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -87,7 +87,7 @@ const QuickResponseCode = (props) => {
         <DialogTitle id="alert-dialog-title" />
         <DialogContent>
           <div className={classes.form}>
-            <QRCode
+            <QRCodeSVG
               style={{ borderRadius: 8, marginTop:15, boxShadow: "0px 0px 35px 2px rgba(0,0,0,0.2)" }}
               value={url}
               size={200}
