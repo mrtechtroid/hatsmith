@@ -4,20 +4,15 @@ import Hero from "../components/Hero";
 import LimitedPanels from "../components/limited/LimitedPanels";
 import Footer from "../components/Footer";
 
-const useStyles = makeStyles((theme) => ({
-  body: {
-    backgroundColor: theme.palette.custom.alabaster.main,
-    minHeight: "100vh",
-    display: "flex",
-    flexDirection: "column",
-  }
-}))
-
 const LimitedContainer = () => {
-  const classes = useStyles();
 
   return (
-    <div className={classes.body}>
+    <div sx={{
+        backgroundColor: (theme) => theme.palette.custom?.alabaster?.main || "#fff",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+      }}>
       <NavAppBar />
       <Hero />
       <LimitedPanels />

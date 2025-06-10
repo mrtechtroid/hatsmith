@@ -2,6 +2,7 @@ import { createTheme } from "@mui/material/styles";
 import { FormControlLabel, Switch } from "@mui/material";
 import { useState } from "react";
 import { getTranslations as t } from "../../locales";
+import { border, styled } from '@mui/system';
 
 export const Theme = createTheme({
   palette: {
@@ -65,6 +66,52 @@ export const Theme = createTheme({
   },
 });
 
+
+
+const DarkModeSwitch = styled(Switch)(({ theme }) => ({
+  width: 60,
+  height: 34,
+  padding: 3,
+  marginLeft: 20,
+  '& .MuiSwitch-switchBase': {
+    padding: 4,
+    '&.Mui-checked': {
+      transform: 'translateX(26px)',
+      color: '#000',
+      '& + .MuiSwitch-track': {
+        opacity: 1,
+        backgroundColor: 'black',
+      },
+      '& .MuiSwitch-thumb': {
+        backgroundColor: 'transparent'
+      },
+      '& .MuiSwitch-thumb:before': {
+        content: '"🌙"',
+      },
+    },
+  },
+  '& .MuiSwitch-thumb': {
+    backgroundColor: 'transparent',
+    width: 26,
+    height: 26,
+    borderRadius: '50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 18,
+    position: 'relative',
+    '&:before': {
+      content: '"☀️"',
+      position: 'absolute',
+    },
+  },
+  '& .MuiSwitch-track': {
+    borderRadius: 34,
+    backgroundColor: 'grey',
+    opacity: 1,
+  },
+}));
+
 export const checkTheme = () => {
   
   if (typeof window !== "undefined") {
@@ -84,6 +131,32 @@ export const checkTheme = () => {
     }
   }
 
+}
+
+export const DarkModeLight = () => {
+  const [checked, setchecked] = useState(document.querySelector("html").classList.contains("darkStyle"))
+
+  const changeTheme = () => {
+    if (localStorage) {
+      if (!checked) {
+        localStorage.setItem("darkTheme", "1");
+        document.querySelector("html").classList.add("darkStyle");
+        setchecked(true)
+      } else {
+        localStorage.setItem("darkTheme", "0");
+        document.querySelector("html").classList.remove("darkStyle");
+        setchecked(false)
+      }
+    }
+  };
+
+  return (
+    <FormControlLabel
+      value="darkModeEnabled"
+      
+      control={<DarkModeSwitch checked={checked} onChange={()=>{changeTheme()}} />}
+    />
+  );
 }
 
 

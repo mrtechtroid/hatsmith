@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
+    padding: 0,
   },
 }));
 
@@ -32,7 +33,12 @@ const Language = () => {
 
   return (
     <>
-      <FormControl variant="outlined" className={classes.formControl}>
+      <FormControl varient="outlined" className={classes.formControl} sx={{
+          '& .MuiOutlinedInput-root': {
+            height: '40px', // Adjust this to your desired height
+            padding: '5px'
+          }
+          }}>
         <InputLabel>{t("language")}</InputLabel>
         <Select
           value={language}
@@ -46,23 +52,6 @@ const Language = () => {
           ))}
         </Select>
       </FormControl>
-
-      <Hidden xsDown>
-        <Alert
-          className={classes.formControl}
-          severity="info"
-          action={
-            <Button
-              href="https://github.com/sh-dv/hat.sh/blob/master/TRANSLATION.md"
-              target="_blank"
-            >
-              {t("guide")}
-            </Button>
-          }
-        >
-          {t("help_translate")}
-        </Alert>
-      </Hidden>
     </>
   );
 };

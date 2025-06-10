@@ -11,7 +11,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import Language from "../config/Language";
 import { DarkMode } from "../config/Theme";
 import { getTranslations as t } from "../../locales";
-
+import Alert from "@mui/material/Alert";
 const useStyles = makeStyles((theme) => ({
   topScrollPaper: {
     alignItems: "start",
@@ -62,6 +62,20 @@ const Settings = () => {
           </DialogContentText>
 
           <Language />
+          <Alert
+          className={classes.formControl}
+          severity="info"
+          action={
+            <Button
+              href="https://github.com/sh-dv/hat.sh/blob/master/TRANSLATION.md"
+              target="_blank"
+            >
+              {t("guide")}
+            </Button>
+          }
+        >
+          {t("help_translate")}
+        </Alert>
 
           <DialogContentText
             id="alert-dialog-description"

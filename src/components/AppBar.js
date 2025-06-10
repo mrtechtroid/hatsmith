@@ -11,6 +11,9 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import VersionBadge from "./VersionBadge";
 import Settings from "./Settings";
 import { getTranslations as t } from "../../locales";
+import Language from "../config/Language";
+import { DarkModeLight } from "../config/Theme";
+import { Box } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
 
@@ -42,7 +45,7 @@ export default function NavAppBar() {
             <Button color="inherit" href="/about/" className={classes.button}>
               {t("about")}
             </Button>
-
+            
             <IconButton
               href="https://github.com/mrtechtroid/hatsmith"
               target="_blank"
@@ -50,8 +53,19 @@ export default function NavAppBar() {
             >
               <GitHubIcon />
             </IconButton>
+            
+            <Box sx={{display: {xs: 'none', md: 'flex'}}}>
+              <DarkModeLight />
+            </Box>
 
-            <Settings />
+            <Box sx={{display: {xs: 'none', md: 'flex'}}}>
+              <Language />
+            </Box>
+            <Box sx={{display: {xs: 'flex', md: 'none'}}}>
+              <Settings/>
+            </Box>
+            
+            
           </Toolbar>
         </Container>
       </AppBar>
