@@ -3,7 +3,7 @@ import { FormControlLabel, Switch } from "@mui/material";
 import { useState } from "react";
 import { getTranslations as t } from "../../locales";
 import { border, styled } from '@mui/system';
-
+import { useEffect } from "react";
 export const Theme = createTheme({
   palette: {
     primary: {
@@ -141,7 +141,9 @@ export const DarkModeLight = () => {
   if (typeof document === "undefined") {
     return;
   }
-  setchecked(document.querySelector("html").classList.contains("darkStyle"));
+  useEffect(() => {
+    setchecked(document.querySelector("html").classList.contains("darkStyle"));
+  },[])
   const changeTheme = () => {
     if (localStorage) {
       if (!checked) {
