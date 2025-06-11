@@ -135,15 +135,17 @@ export const checkTheme = () => {
 
 export const DarkModeLight = () => {
   const [checked, setchecked] = useState(false)
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      setchecked(document.querySelector("html").classList.contains("darkStyle"));
+    }
+  },[])
   if (typeof window === "undefined") {
     return;
   }
   if (typeof document === "undefined") {
     return;
   }
-  useEffect(() => {
-    setchecked(document.querySelector("html").classList.contains("darkStyle"));
-  },[])
   const changeTheme = () => {
     if (localStorage) {
       if (!checked) {
