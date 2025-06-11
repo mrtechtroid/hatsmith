@@ -134,8 +134,14 @@ export const checkTheme = () => {
 }
 
 export const DarkModeLight = () => {
-  const [checked, setchecked] = useState(document.querySelector("html").classList.contains("darkStyle"))
-
+  const [checked, setchecked] = useState(false)
+  if (typeof window === "undefined") {
+    return;
+  }
+  if (typeof document === "undefined") {
+    return;
+  }
+  setchecked(document.querySelector("html").classList.contains("darkStyle"));
   const changeTheme = () => {
     if (localStorage) {
       if (!checked) {

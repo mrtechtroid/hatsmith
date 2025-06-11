@@ -87,6 +87,12 @@ const KeysGeneration = (props) => {
   };
 
   const downloadKey = (data, filename) => {
+    if (typeof window === "undefined") {
+      return;
+    }
+    if (typeof document === "undefined") {
+      return;
+    }
     let file = new Blob([data], { type: "text/plain" });
 
     let a = document.createElement("a"),

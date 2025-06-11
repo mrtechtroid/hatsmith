@@ -8,8 +8,8 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.custom.mountainMist.main,
     borderRadius: ".25rem",
     padding: "none",
-    marginLeft: 15,
-    marginBottom: 10,
+    marginLeft: 5,
+    marginBottom: 0,
   },
 }));
 

@@ -3,7 +3,7 @@ import { makeStyles } from "@mui/styles";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { getTranslations as t } from "../../locales";
-
+import VersionBadge from "./VersionBadge";
 const useStyles = makeStyles((theme) => ({
   heroTitle: {
     color: theme.palette.custom.diamondBlack.main,
@@ -24,8 +24,9 @@ export default function Hero() {
         gutterBottom
         className={classes.heroTitle}
       >
-        {"Hatsmith"}
+        {"Hatsmith"}<VersionBadge />
       </Typography>
+      
       <Typography
         variant="subtitle1"
         align="center"

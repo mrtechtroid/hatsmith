@@ -524,6 +524,12 @@ const LimitedEncryptionPanel = () => {
   };
 
   const handleEncryptedFileDownload = () => {
+    if (typeof window === "undefined") {
+      return;
+    }
+    if (typeof document === "undefined") {
+      return;
+    }
     let fileName = File.name + ".enc";
     let blob = new Blob(limitedEncFileBuff);
     let link = document.createElement("a");

@@ -637,6 +637,12 @@ const LimitedDecryptionPanel = () => {
   };
 
   const handleDecryptedFileDownload = () => {
+    if (typeof window === "undefined") {
+      return;
+    }
+    if (typeof document === "undefined") {
+      return;
+    }
     let fileName = formatName(File.name);
 
     let blob = new Blob(limitedDecFileBuff);

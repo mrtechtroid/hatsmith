@@ -39,7 +39,6 @@ export default function NavAppBar() {
               <a href="/">
                 <img src="/assets/images/logo_new.png" alt="logo" width="40" />
               </a>
-              <VersionBadge />
             </Typography>
 
             <Button color="inherit" href="/about/" className={classes.button}>
