@@ -2,6 +2,7 @@
 
 ## v3.0.0
 
+- Add file info dialog
 - Update packages
 - - Migrate from zxcvbn to [zxcvbn-ts/zxcvbn](https://github.com/zxcvbn-ts/zxcvbn) for password strength checking.
 - - Update cypress to v14.4.1

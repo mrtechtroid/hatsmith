@@ -50,6 +50,8 @@ import {
   ListItemText,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import InfoIcon from "@mui/icons-material/Info";
+import FileInfoDialog from "./FileInfoDialog";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -617,6 +619,18 @@ export default function EncryptionPanel() {
       }
     });
   }, []);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [showInfo, setShowInfo] = useState(false);
+
+  const handleOpenInfo = (file) => {
+    setSelectedFile(file);
+    setShowInfo(true);
+  };
+
+  const handleCloseInfo = () => {
+    setShowInfo(false);
+    setSelectedFile(null);
+  };
 
   return (
     <div className={classes.root} {...getRootProps()}>
@@ -710,6 +724,14 @@ export default function EncryptionPanel() {
                             <ListItemSecondaryAction>
                               <IconButton
                                 style={{ marginTop: 40 }}
+                                onClick={() => handleOpenInfo(file)}
+                                edge="end"
+                                aria-label="info"
+                              >
+                                <InfoIcon />
+                              </IconButton>
+                              <IconButton
+                                style={{ marginTop: 40 }}
                                 onClick={() => updateFilesInput(index)}
                                 edge="end"
                                 aria-label="delete"
@@ -722,7 +744,7 @@ export default function EncryptionPanel() {
                       : t("drag_drop_files")}
                   </List>
                 </Paper>
-
+                
                 <input
                   {...getInputProps()}
                   className={classes.input}
@@ -761,6 +783,7 @@ export default function EncryptionPanel() {
                   </>
                 )}
               </div>
+              <FileInfoDialog file={selectedFile} display={showInfo} onClose={handleCloseInfo} />
             </div>
 
             <div className={classes.actionsContainer}>

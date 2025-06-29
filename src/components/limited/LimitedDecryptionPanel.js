@@ -41,6 +41,8 @@ import {
   ListItemText,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import InfoIcon from "@mui/icons-material/Info";
+import FileInfoDialog from "../FileInfoDialog";
 import { getTranslations as t } from "../../../locales";
 
 const _sodium = require("libsodium-wrappers");
@@ -661,6 +663,18 @@ const LimitedDecryptionPanel = () => {
       setDecryptionMethod("publicKey");
     }
   }, [query.publicKey, query.tab]);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [showInfo, setShowInfo] = useState(false);
+
+  const handleOpenInfo = (file) => {
+    setSelectedFile(file);
+    setShowInfo(true);
+  };
+
+  const handleCloseInfo = () => {
+    setShowInfo(false);
+    setSelectedFile(null);
+  };
 
   return (
     <div className={classes.root} {...getRootProps()}>
@@ -717,6 +731,7 @@ const LimitedDecryptionPanel = () => {
             {t("choose_file_dec")}
           </StepLabel>
           <StepContent>
+            <FileInfoDialog file={selectedFile} display={showInfo} onClose={handleCloseInfo} />
             <div className="wrapper p-3" id="encFileWrapper">
               <div className={classes.fileArea} id="encFileArea">
                 <Paper
@@ -756,6 +771,14 @@ const LimitedDecryptionPanel = () => {
                           secondary={formatBytes(File.size)}
                         />
                         <ListItemSecondaryAction>
+                          <IconButton
+                            style={{ marginTop: 40 }}
+                            onClick={() => handleOpenInfo(file)}
+                            edge="end"
+                            aria-label="info"
+                          >
+                            <InfoIcon />
+                          </IconButton>
                           <IconButton
                             style={{ marginTop: 40 }}
                             onClick={() => removeFile()}

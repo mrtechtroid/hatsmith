@@ -42,6 +42,9 @@ import {
   ListItemText,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import InfoIcon from "@mui/icons-material/Info";
+import FileInfoDialog from "./FileInfoDialog";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -803,6 +806,18 @@ export default function DecryptionPanel() {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const [selectedFile, setSelectedFile] = useState(null);
+    const [showInfo, setShowInfo] = useState(false);
+  
+    const handleOpenInfo = (file) => {
+      setSelectedFile(file);
+      setShowInfo(true);
+    };
+  
+    const handleCloseInfo = () => {
+      setShowInfo(false);
+      setSelectedFile(null);
+    };
 
   return (
     <div className={classes.root} {...getRootProps()}>
@@ -881,6 +896,14 @@ export default function DecryptionPanel() {
                               secondary={formatBytes(file.size)}
                             />
                             <ListItemSecondaryAction>
+                              <IconButton
+                                style={{ marginTop: 40 }}
+                                onClick={() => handleOpenInfo(file)}
+                                edge="end"
+                                aria-label="info"
+                              >
+                                <InfoIcon />
+                              </IconButton>
                               <IconButton
                                 style={{ marginTop: 40 }}
                                 onClick={() => updateFilesInput(index)}
@@ -987,6 +1010,7 @@ export default function DecryptionPanel() {
                 {t("offline_note")}
               </Typography>
             )}
+            <FileInfoDialog file={selectedFile} display={showInfo} onClose={handleCloseInfo} />
           </StepContent>
         </Step>
 
