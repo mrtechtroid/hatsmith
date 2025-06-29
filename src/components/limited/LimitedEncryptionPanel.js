@@ -54,7 +54,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
 import FileInfoDialog from "../FileInfoDialog";
 import { getTranslations as t } from "../../../locales";
-
+import { generatePassword, generatePassPhrase } from "../../utils/generatePassword";
 const _sodium = require("libsodium-wrappers");
 
 const useStyles = makeStyles((theme) => ({
@@ -209,6 +209,8 @@ const LimitedEncryptionPanel = () => {
 
   const [pkAlert, setPkAlert] = useState(false);
 
+  const [isPassphraseMode, setIsPassphraseMode] = useState(false);
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: (acceptedFile) => {
       handleLimitedFileInput(acceptedFile[0]);
@@ -231,7 +233,13 @@ const LimitedEncryptionPanel = () => {
   };
 
   const handleRadioChange = (e) => {
-    setEncryptionMethod(e.target.value);
+    if (e.target.value === "secretKey2") {
+      setIsPassphraseMode(true);
+      setEncryptionMethod("secretKey");
+    } else {
+      setIsPassphraseMode(false);
+      setEncryptionMethod(e.target.value);
+    }
   };
 
   const handleReset = () => {
@@ -277,12 +285,12 @@ const LimitedEncryptionPanel = () => {
   };
 
   const generatedPassword = async () => {
-    await _sodium.ready;
-    const sodium = _sodium;
-    let gPassword = sodium.to_base64(
-      sodium.randombytes_buf(16),
-      sodium.base64_variants.URLSAFE_NO_PADDING
-    );
+    let gPassword = ""
+    if (isPassphraseMode){
+      gPassword = await generatePassPhrase();
+    }else{
+      gPassword = await generatePassword();
+    }
     setPassword(gPassword);
     setShortPasswordError(false);
   };
@@ -683,7 +691,7 @@ const LimitedEncryptionPanel = () => {
                             edge="end"
                             aria-label="info"
                           >
-                            <DeleteIcon />
+                            <InfoIcon />
                           </IconButton>
                           <IconButton
                             style={{ marginTop: 40 }}
@@ -758,9 +766,8 @@ const LimitedEncryptionPanel = () => {
               },
             }}
           >
-            {encryptionMethod === "secretKey"
-              ? t("enter_password_enc")
-              : t("enter_keys_enc")}
+            {encryptionMethod !== "secretKey"
+              ?  t("enter_keys_enc") : isPassphraseMode ? t("enter_passphrase") :  t("enter_password_enc") }
           </StepLabel>
           <StepContent>
             <FormControl
@@ -769,13 +776,20 @@ const LimitedEncryptionPanel = () => {
             >
               <RadioGroup
                 row
-                defaultValue={encryptionMethod}
+                value={encryptionMethod+((encryptionMethod === "secretKey" && isPassphraseMode)?"2":"")}
                 aria-label="encryption options"
               >
                 <FormControlLabel
                   value="secretKey"
                   control={<Radio color="default" />}
                   label={t("password")}
+                  labelPlacement="end"
+                  onChange={handleRadioChange}
+                />
+                <FormControlLabel
+                  value="secretKey2"
+                  control={<Radio color="default" />}
+                  label={t("passphrase")}
                   labelPlacement="end"
                   onChange={handleRadioChange}
                 />

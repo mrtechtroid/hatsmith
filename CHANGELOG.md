@@ -3,6 +3,7 @@
 ## v3.0.0
 
 - Add file info dialog
+- Add passphrase generation. (Thanks to [EFF Long Word List](https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt))
 - Update packages
 - - Migrate from zxcvbn to [zxcvbn-ts/zxcvbn](https://github.com/zxcvbn-ts/zxcvbn) for password strength checking.
 - - Update cypress to v14.4.1

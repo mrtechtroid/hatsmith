@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useDropzone } from "react-dropzone";
 import { formatBytes } from "../helpers/formatBytes";
 import KeyPairGeneration from "./KeyPairGeneration";
-import { generatePassword } from "../utils/generatePassword";
+import { generatePassword, generatePassPhrase } from "../utils/generatePassword";
 import { computePublicKey } from "../utils/computePublicKey";
 import passwordStrengthCheck from "../utils/passwordStrengthCheck";
 import { CHUNK_SIZE } from "../config/Constants";
@@ -262,6 +262,8 @@ export default function EncryptionPanel() {
 
   const [pkAlert, setPkAlert] = useState(false);
 
+  const [isPassphraseMode, setIsPassphraseMode] = useState(false);
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: (acceptedFiles) => {
       handleFilesInput(acceptedFiles);
@@ -284,6 +286,12 @@ export default function EncryptionPanel() {
   };
 
   const handleRadioChange = (method) => {
+    if (method === "secretKey2") {
+      setIsPassphraseMode(true);
+      method = "secretKey";
+    } else {
+      setIsPassphraseMode(false);
+    }
     setEncryptionMethod(method);
     encryptionMethodState = method;
   };
@@ -351,14 +359,18 @@ export default function EncryptionPanel() {
   };
 
   const generatedPassword = async () => {
-    if (encryptionMethod === "secretKey") {
+    if (isPassphraseMode === false && encryptionMethod === "secretKey") {
       let generated = await generatePassword();
       password = generated;
       setPassword(generated);
       setShortPasswordError(false);
-    }
-    
+    }else if (isPassphraseMode === true && encryptionMethod === "secretKey") {
+      let generated = await generatePassPhrase();
+      password = generated;
+      setPassword(generated);
+      setShortPasswordError(false);
     };
+  }
 
   const handleFilesInput = (selectedFiles) => {
     selectedFiles = Array.from(selectedFiles);
@@ -816,9 +828,8 @@ export default function EncryptionPanel() {
               },
             }}
           >
-            {encryptionMethod === "secretKey"
-              ? t("enter_password_enc")
-              : t("enter_keys_enc")}
+            {encryptionMethod !== "secretKey"
+              ?  t("enter_keys_enc") : isPassphraseMode ? t("enter_passphrase") :  t("enter_password_enc") }
           </StepLabel>
 
           <StepContent>
@@ -828,7 +839,7 @@ export default function EncryptionPanel() {
             >
               <RadioGroup
                 row
-                value={encryptionMethod}
+                value={encryptionMethod+((encryptionMethod === "secretKey" && isPassphraseMode)?"2":"")}
                 aria-label="encryption options"
               >
                 <FormControlLabel
@@ -837,6 +848,13 @@ export default function EncryptionPanel() {
                   label={t("password")}
                   labelPlacement="end"
                   onChange={() => handleRadioChange("secretKey")}
+                />
+                <FormControlLabel
+                  value="secretKey2"
+                  control={<Radio color="default" />}
+                  label={t("passphrase")}
+                  labelPlacement="end"
+                  onChange={() => handleRadioChange("secretKey2")}
                 />
                 <FormControlLabel
                   value="publicKey"
@@ -849,7 +867,7 @@ export default function EncryptionPanel() {
               </RadioGroup>
             </FormControl>
 
-            {encryptionMethod === "secretKey" && (
+            {(encryptionMethod === "secretKey" || encryptionMethod === "secretKey2") && (
               <TextField
                 required
                 error={shortPasswordError ? true : false}
