@@ -425,7 +425,7 @@ Password hashing functions derive a secret key of any size from a password and a
 
 <br>
 
-<div class="codeBox">
+<!-- <div class="codeBox"> -->
 
 ```javascript
 let salt = sodium.randombytes_buf(sodium.crypto_pwhash_SALTBYTES);
@@ -439,7 +439,7 @@ let key = sodium.crypto_pwhash(
 );
 ```
 
-</div>
+<!-- </div> -->
 
 The `crypto_pwhash()` function derives an 256 bits long key from a password and a salt salt whose fixed length is 128 bits, which should be unpredictable.
 
@@ -465,7 +465,7 @@ In order to use the app to encrypt a file, the user has to provide a valid file 
 
 <br>
 
-<div class="codeBox">
+<!-- <div class="codeBox"> -->
 
 ```javascript
 let res = sodium.crypto_secretstream_xchacha20poly1305_init_push(key);
@@ -486,7 +486,7 @@ let encryptedChunk = sodium.crypto_secretstream_xchacha20poly1305_push(
 stream.enqueue(signature, salt, header, encryptedChunk);
 ```
 
-</div>
+<!-- </div> -->
 
 The `crypto_secretstream_xchacha20poly1305_init_push` function creates an encrypted stream where it initializes a `state` using the key and an internal, automatically generated initialization vector. It then stores the stream header into `header` that has a size of 192 bits.
 
@@ -510,7 +510,7 @@ the XChaCha20 stream cipher Poly1305 MAC authentication are used for encryption.
 
 ### File Decryption (stream)
 
-<div class="codeBox">
+<!-- <div class="codeBox"> -->
 
 ```javascript
 let state = sodium.crypto_secretstream_xchacha20poly1305_init_pull(header, key);
@@ -530,7 +530,7 @@ if (result) {
 }
 ```
 
-</div>
+<!-- </div> -->
 
 The `crypto_secretstream_xchacha20poly1305_init_pull()` function initializes a state given a secret `key` and a `header`. The key is derived from the password provided during the decryption, and the header sliced from the file. The key will not be required any more for subsequent operations.
 
@@ -548,7 +548,7 @@ If the ciphertext or the authentication tag appear to be invalid it returns an e
 
 ### Random password generation
 
-<div class="codeBox">
+<!-- <div class="codeBox"> -->
 
 ```javascript
 let password = sodium.to_base64(
@@ -558,7 +558,7 @@ let password = sodium.to_base64(
 return password;
 ```
 
-</div>
+<!-- </div> -->
 
 The `randombytes_buf()` function fills 128 bits starting at buf with an unpredictable sequence of bytes.
 
@@ -568,7 +568,7 @@ The `to_base64()` function encodes buf as a Base64 string without padding.
 
 ### Keys generation and exchange
 
-<div class="codeBox">
+<!-- <div class="codeBox"> -->
 
 ```javascript
 const keyPair = sodium.crypto_kx_keypair();
@@ -578,13 +578,13 @@ let keys = {
 };
 return keys;
 ```
-</div>
+<!-- </div> -->
 
 The `crypto_kx_keypair()` function randomly generates a secret key and a corresponding public key. The public key is put into publicKey and the secret key into privateKey. both of 256 bits.
 
 <br>
 
-<div class="codeBox">
+<!-- <div class="codeBox"> -->
 
 ```javascript
 let key = sodium.crypto_kx_client_session_keys(
@@ -593,7 +593,7 @@ let key = sodium.crypto_kx_client_session_keys(
   publicKey
 );
 ```
-</div>
+<!-- </div> -->
 
 Using the key exchange API, two parties can securely compute a set of shared keys using their peer's public key and their own secret key.
 
