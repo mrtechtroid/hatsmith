@@ -23,7 +23,7 @@ const locales = {
   cs_CS,
   tr_TR,
   ja_JP,
-  ca
+  ca_ES
 };
 
 export default locales;
