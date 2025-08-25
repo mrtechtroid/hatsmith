@@ -1,4 +1,4 @@
-const ca = {
+const ca_ES = {
   language_name: "Català",
   
   // Menu
@@ -184,4 +184,4 @@ const ca = {
   
 };
 
-export default ca;
+export default ca_ES;
