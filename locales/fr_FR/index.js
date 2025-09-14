@@ -167,5 +167,13 @@ const fr_FR = {
   qr_code_note_one: "Ce QR code contient votre clé publique. Après un scan, l'équipement redirige vers l'application et auto-rempli la clé publique.",
   qr_code_note_two: "Vous pouvez partager ce QR code ou le lien avec vos correspondants pour éviter la saisie manuelle de votre clé publique.",
   qr_code_note_three: "Ce QR code a été généré hors ligne.",
+
+  // Informations sur le fichier
+  fi_file_info: "Informations sur le fichier",
+  fi_name: "Nom",
+  fi_size: "Taille",
+  fi_type: "Type",
+  fi_last_modified: "Dernière modification",
+  fi_hashes: "Hashes"
 };
 export default fr_FR;

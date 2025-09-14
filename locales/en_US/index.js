@@ -181,6 +181,14 @@ const en_US = {
   qr_code_note_one: "This QR code contains your public key. After scanning, the device will redirect to the app and autofills the public key.",
   qr_code_note_two: "You can share this QR code or link with others, instead of them having to manually enter your public key when encrypting files.",
   qr_code_note_three: "This QR code was generated offline.",
+
+  // File Info
+  fi_file_info: "File Info",
+  fi_name: "Name",
+  fi_size: "Size",
+  fi_type: "Type",
+  fi_last_modified: "Last Modified",
+  fi_hashes: "Hashes",
   
 };
 

@@ -9,7 +9,7 @@ import {
   CircularProgress
 } from '@mui/material';
 import { FileUtils, FileInfo } from '../utils/fileUtils';
-
+import { getTranslations as t } from '../../locales';
 // interface FileInfoDialogProps {
 //   file: File | null;
 //   display: boolean;
@@ -33,18 +33,18 @@ const FileInfoDialog = ({ file, display, onClose }) => {
 
   return (
     <Dialog open={display} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>File Info</DialogTitle>
+      <DialogTitle>{t('fi_file_info')}</DialogTitle>
       <DialogContent>
         {loading ? (
           <CircularProgress />
         ) : fileInfo ? (
           <>
-            <Typography><strong>Name:</strong> {fileInfo.name}</Typography>
-            <Typography><strong>Size:</strong> {fileInfo.size} bytes</Typography>
-            <Typography><strong>Type:</strong> {fileInfo.type}</Typography>
-            <Typography><strong>Last Modified:</strong> {fileInfo.lastModified.toLocaleString()}</Typography>
+            <Typography><strong>{t('fi_name')}:</strong> {fileInfo.name}</Typography>
+            <Typography><strong>{t('fi_size')}:</strong> {fileInfo.size} bytes</Typography>
+            <Typography><strong>{t('fi_type')}:</strong> {fileInfo.type}</Typography>
+            <Typography><strong>{t('fi_last_modified')}:</strong> {fileInfo.lastModified.toLocaleString()}</Typography>
 
-            <Typography variant="h6" sx={{ mt: 2 }}>Hashes</Typography>
+            <Typography variant="h6" sx={{ mt: 2 }}>{t('fi_hashes')}</Typography>
             <Typography><strong>SHA-256:</strong> {fileInfo.hashes.sha256}</Typography>
             <Typography><strong>SHA-1:</strong> {fileInfo.hashes.sha1}</Typography>
             <Typography><strong>MD5:</strong> {fileInfo.hashes.md5}</Typography>
