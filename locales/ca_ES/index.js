@@ -182,6 +182,14 @@ const ca_ES = {
   qr_code_note_two: "Podeu compartir aquest codi QR o l'enllaç, perquè així el destinatari no hagi d'introduir manualment la vostra clau pública en desxifrar els fitxers.",
   qr_code_note_three: "Aquest codi QR s'ha generat fora de línia.",
   
+  // File Info
+  fi_file_info: "Informació del fitxer",
+  fi_name: "Nom",
+  fi_size: "Mida",
+  fi_type: "Tipus",
+  fi_last_modified: "Última modificació",
+  fi_hashes: "Codis resum",
+  
 };
 
 export default ca_ES;
