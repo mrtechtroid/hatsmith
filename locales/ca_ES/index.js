@@ -102,7 +102,7 @@ const ca_ES = {
   your_private_key_enc: "La vostra clau privada",
   enter_private_key_enc: "Introduïu la vostra clau privada",
   encrypted_files: "Fitxers xifrats",
-  download_encrypted_files: "Baixa els fitxers xifrats",
+  download_encrypted_files: "Baixeu els fitxers xifrats",
   success_downloaded_files_enc: "Heu baixat els fitxers xifrats correctament!",
   encrypt_more_files: "Xifra més fitxers",
   create_shareable_link: "Crea un enllaç per a compartir",
@@ -134,7 +134,7 @@ const ca_ES = {
   your_private_key_dec: "La vostra clau privada",
   enter_private_key_dec: "Introduïu la vostra clau privada",
   decrypted_files: "Fitxers desxifrats",
-  download_decrypted_files: "Baixa els fitxers desxifrats",
+  download_decrypted_files: "Baixeu els fitxers desxifrats",
   success_downloaded_files_dec: "Heu baixat els fitxers desxifrats correctament!",
   decrypt_other_files: "Desxifra altres fitxers",
 
