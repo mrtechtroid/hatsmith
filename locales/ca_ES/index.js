@@ -102,7 +102,7 @@ const ca_ES = {
   your_private_key_enc: "La vostra clau privada",
   enter_private_key_enc: "Introduïu la vostra clau privada",
   encrypted_files: "Fitxers xifrats",
-  download_encrypted_files: "Baixa els fitxers xifrats",
+  download_encrypted_files: "Baixeu els fitxers xifrats",
   success_downloaded_files_enc: "Heu baixat els fitxers xifrats correctament!",
   encrypt_more_files: "Xifra més fitxers",
   create_shareable_link: "Crea un enllaç per a compartir",
@@ -134,7 +134,7 @@ const ca_ES = {
   your_private_key_dec: "La vostra clau privada",
   enter_private_key_dec: "Introduïu la vostra clau privada",
   decrypted_files: "Fitxers desxifrats",
-  download_decrypted_files: "Baixa els fitxers desxifrats",
+  download_decrypted_files: "Baixeu els fitxers desxifrats",
   success_downloaded_files_dec: "Heu baixat els fitxers desxifrats correctament!",
   decrypt_other_files: "Desxifra altres fitxers",
 
@@ -181,6 +181,14 @@ const ca_ES = {
   qr_code_note_one: "Aquest codi QR conté la vostra clau pública. En escanejar-la, el dispositiu es redirigirà a l'aplicació i autocompletarà la clau pública.",
   qr_code_note_two: "Podeu compartir aquest codi QR o l'enllaç, perquè així el destinatari no hagi d'introduir manualment la vostra clau pública en desxifrar els fitxers.",
   qr_code_note_three: "Aquest codi QR s'ha generat fora de línia.",
+  
+  // File Info
+  fi_file_info: "Informació del fitxer",
+  fi_name: "Nom",
+  fi_size: "Mida",
+  fi_type: "Tipus",
+  fi_last_modified: "Última modificació",
+  fi_hashes: "Codis resum",
   
 };
 
