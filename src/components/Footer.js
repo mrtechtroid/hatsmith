@@ -157,12 +157,12 @@ export default function Footer() {
           <Typography variant="body1">
             Maintained by {" "}
             <Link
-              href="https://github.com/mrtechtroid"
+              href="https://github.com/Voornaamenachternaam"
               target="_blank"
               rel="noopener"
               color="inherit"
             >
-              {"mrtechtroid"}
+              {"Voornaamenachternaam"}
             </Link>
           </Typography>
           <Typography variant="body1">
