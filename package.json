@@ -21,7 +21,7 @@
     "@zxcvbn-ts/language-common": "^3.0.4",
     "@zxcvbn-ts/language-en": "^3.0.2",
     "cypress": "^14.4.1",
-    "libsodium-wrappers": "^0.7.10",
+    "libsodium-wrappers": "^0.7.15",
     "marked": "4.0.16",
     "next": "^15.5.4",
     "prismjs": "^1.28.0",
@@ -32,7 +32,7 @@
     "spark-md5": "^3.0.2"
   },
   "devDependencies": {
-    "browserify": "^17.0.0",
+    "browserify": "^17.0.1",
     "cypress-file-upload": "^5.0.8",
     "cypress-real-events": "^1.14.0",
     "eslint": "8.15.0",
