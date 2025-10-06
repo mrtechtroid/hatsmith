@@ -359,7 +359,7 @@ Also, if you feel that your private key has been compromised (e.g accidentally s
 
 ### How do I generate a keypair (Public & Private)?
 
-You can generate keys by visit the [key generate page](#generate-keys), make sure to [store the keys safely](#best-practices).
+You can generate keys by visit the [key generate page](https://hatsmith-topaz.vercel.app/generate-keys/), make sure to [store the keys safely](#best-practices).
 
 <hr style="height: 1px">
 
