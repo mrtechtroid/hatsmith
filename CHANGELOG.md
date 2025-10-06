@@ -1,5 +1,14 @@
 # [CHANGELOG](#changelog)
 
+## v3.0.1
+
+- Updates
+- - Update Nodejs to v19.2.0
+- - Update libsodium-wrappers to v0.7.15
+- - Update React to v19.2.0
+- - Update Next to v15.5.4
+
+---
 ## v3.0.0
 
 - Add file info dialog
