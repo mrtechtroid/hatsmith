@@ -9,3 +9,14 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
+      
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    ignore:
+      - dependency-name: "@mui/icons-material"
+      - dependency-name: "@mui/lab"
+      - dependency-name: "@mui/material"
+      - dependency-name: "@mui/styles"
