@@ -3,10 +3,9 @@
 ## v3.0.1
 
 - Updates
-- - Update Nodejs to v19.2.0
-- - Update libsodium-wrappers to v0.7.15
-- - Update React to v19.2.0
-- - Update Next to v15.5.4
+- - Update Nodejs to v19.2.0, set in .nvmrc
+- - Update all dependencies but for MUI the latest stable v5
+- - Regenerate package-lock.json
 
 ---
 ## v3.0.0
