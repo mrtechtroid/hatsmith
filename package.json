@@ -14,17 +14,17 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^5.17.1",
-    "@mui/lab": "^5.0.0-alpha.176",
-    "@mui/material": "^5.17.1",
-    "@mui/styles": "^5.17.1",
+    "@mui/lab": "^5.0.0-alpha.177",
+    "@mui/material": "^5.18.0",
+    "@mui/styles": "^5.18.0",
     "@zxcvbn-ts/core": "^3.0.4",
     "@zxcvbn-ts/language-common": "^3.0.4",
     "@zxcvbn-ts/language-en": "^3.0.2",
     "cypress": "^14.4.1",
     "libsodium-wrappers": "^0.7.15",
-    "marked": "4.0.16",
+    "marked": "16.3.0",
     "next": "^15.5.4",
-    "prismjs": "^1.28.0",
+    "prismjs": "^1.30.0",
     "qrcode.react": "^4.2.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
@@ -35,7 +35,7 @@
     "browserify": "^17.0.1",
     "cypress-file-upload": "^5.0.8",
     "cypress-real-events": "^1.14.0",
-    "eslint": "8.15.0",
-    "eslint-config-next": "12.1.6"
+    "eslint": "9.37.0",
+    "eslint-config-next": "15.5.4"
   }
 }
