@@ -3,7 +3,7 @@
  <img src="/public/assets/images/logo_new.png" width="180"></a>
 </p>
 
-<a href="https://hatsmith.vercel.app" style="color:#000"><h3 align="center">Hatsmith</h3></a>
+<a href="https://hatsmith-topaz.vercel.app" style="color:#000"><h3 align="center">Hatsmith</h3></a>
 
 <div align="center">
 
@@ -17,7 +17,7 @@
 
 ---
 
-[Hatsmith](https://hatsmith.vercel.app) is a web app that provides secure local file encryption in the browser. It's fast, secure, and uses modern cryptographic algorithms with chunked AEAD stream encryption/decryption.
+[Hatsmith](https://hatsmith-topaz.vercel.app) is a web app that provides secure local file encryption in the browser. It's fast, secure, and uses modern cryptographic algorithms with chunked AEAD stream encryption/decryption.
 
 Hatsmith is a fork of [Hat.sh](https://github.com/sh-dv/hat.sh), created by sh-dv, and other contributors. Hatsmith will be a drop-in replacement for Hat.sh, with the same features and security guarantees, and will keep the same versioning scheme.
 
@@ -54,7 +54,7 @@ The libsodium library is used for all cryptographic algorithms.
 
 ## Offline Use
 
-The app can be easily self hosted, please follow the [installation](https://hatsmith.vercel.app/about/#installation) instructions.
+The app can be easily self hosted, please follow the [installation](https://hatsmith-topaz.vercel.app/about/#installation) instructions.
 
 <br>
 
@@ -75,8 +75,8 @@ Safari and Mobile browsers are limited to single 1GB files, due to lack of suppo
 
 | #   | URL                                       |
 | --- | ----------------------------------------- |
-| 1   | [hatsmith.vercel.app](https://hatsmith.vercel.app)                 |    |
-| 2   | [hatsmith.mtt.one](https://hatsmith.mtt.one) |
+| 1   | [hatsmith-topaz.vercel.app](https://hatsmith-topaz.vercel.app)                 |    |
+| 2   | [hatsmith-topaz.vercel.app](https://hatsmith-topaz.vercel.app) |
 
 <br>
 
