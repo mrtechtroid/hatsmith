@@ -46,7 +46,7 @@ export default function NavAppBar() {
             </Button>
             
             <IconButton
-              href="https://github.com/mrtechtroid/hatsmith"
+              href="https://github.com/Voornaamenachternaam/hatsmith"
               target="_blank"
               rel="noopener"
             >
