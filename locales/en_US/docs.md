@@ -1,7 +1,7 @@
 # [Introduction](#introduction)
 
 ---
-[Hatsmith](https://hatsmith.vercel.app) is a web app that provides secure local file encryption in the browser. It's fast, secure, and uses modern cryptographic algorithms with chunked AEAD stream encryption/decryption.
+[Hatsmith](https://hatsmith-topaz.vercel.app/) is a web app that provides secure local file encryption in the browser. It's fast, secure, and uses modern cryptographic algorithms with chunked AEAD stream encryption/decryption.
 
 Hatsmith is a fork of [Hat.sh](https://github.com/sh-dv/hat.sh), created by sh-dv, and other contributors. Hatsmith will be a drop-in replacement for Hat.sh, with the same features and security guarantees, and will keep the same versioning scheme.
 
@@ -56,7 +56,7 @@ Before installation make sure you are running [nodejs](https://nodejs.org/en/) a
 1. clone the github repository
 
 ```bash
-git clone https://github.com/mrtechtroid/hatsmith.git hatsmith
+git clone https://github.com/Voornaamenachternaam/hatsmith.git hatsmith
 ```
 
 2. move to the folder
@@ -124,7 +124,7 @@ docker run -d -p 3991:80 shdv/hat.sh
 1. clone the github repository
 
 ```bash
-git clone https://github.com/mrtechtroid/hatsmith.git hatsmith
+git clone https://github.com/Voornaamenachternaam/hatsmith.git hatsmith
 ```
 
 2. move to the folder
@@ -136,13 +136,13 @@ cd hatsmith
 3. build image using docker
 
 ```bash
-docker build . -t mrtechtroid/hatsmith
+docker build . -t Voornaamenachternaam/hatsmith
 ```
 
 4. run container
 
 ```bash
-docker run -d -p 3991:80 mrtechtroid/hatsmith
+docker run -d -p 3991:80 Voornaamenachternaam/hatsmith
 ```
 
 <br>
@@ -152,7 +152,7 @@ docker run -d -p 3991:80 mrtechtroid/hatsmith
 1. clone the github repository
 
 ```bash
-git clone https://github.com/mrtechtroid/hatsmith.git hatsmith
+git clone https://github.com/Voornaamenachternaam/hatsmith.git hatsmith
 ```
 
 2. move to the folder
@@ -359,7 +359,7 @@ Also, if you feel that your private key has been compromised (e.g accidentally s
 
 ### How do I generate a keypair (Public & Private)?
 
-You can generate keys by visit the [key generate page](https://hatsmith.vercel.app/generate-keys), make sure to [store the keys safely](#best-practices).
+You can generate keys by visit the [key generate page](#generate-keys), make sure to [store the keys safely](#best-practices).
 
 <hr style="height: 1px">
 
