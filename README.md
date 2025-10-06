@@ -76,7 +76,7 @@ Safari and Mobile browsers are limited to single 1GB files, due to lack of suppo
 | #   | URL                                       |
 | --- | ----------------------------------------- |
 | 1   | [hatsmith-topaz.vercel.app](https://hatsmith-topaz.vercel.app)                 |    |
-| 2   | [hatsmith-topaz.vercel.app](https://hatsmith-topaz.vercel.app) |
+| 2   | [hatsmith-topaz.vercel.app](https://hatsmith.megalol.nl.eu.org/) |
 
 <br>
 
