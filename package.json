@@ -22,7 +22,7 @@
     "@zxcvbn-ts/language-en": "^3.0.2",
     "cypress": "^15.3.0",
     "libsodium-wrappers": "^0.7.15",
-    "marked": "16.3.0",
+    "marked": "16.4.0",
     "next": "^15.5.4",
     "prismjs": "^1.30.0",
     "qrcode.react": "^4.2.0",
