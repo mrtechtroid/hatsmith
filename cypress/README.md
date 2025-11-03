@@ -9,7 +9,7 @@
 
 move to the hat.sh app root directory
 
-`cd hat.sh`
+`cd ./hatsmith`
 
 install cypress/dependencies:
 
