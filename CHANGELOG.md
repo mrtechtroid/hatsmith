@@ -1,5 +1,8 @@
 # [CHANGELOG](#changelog)
 
+## v3.0.2
+- Coming soon
+
 ## v3.0.1
 
 - Updates
