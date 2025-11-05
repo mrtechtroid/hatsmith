@@ -20,7 +20,7 @@
     "@zxcvbn-ts/core": "^3.0.4",
     "@zxcvbn-ts/language-common": "^3.0.4",
     "@zxcvbn-ts/language-en": "^3.0.2",
-    "cypress": "^15.5.0",
+    "cypress": "^15.6.0",
     "libsodium-wrappers": "^0.7.15",
     "marked": "16.4.1",
     "next": "^16.0.1",
