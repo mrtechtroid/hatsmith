@@ -87,7 +87,7 @@ const Settings = () => {
           <DarkMode />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary" autoFocus>
+          <Button onClick={handleClose} color="primary" >
             {t('close')}
           </Button>
         </DialogActions>
