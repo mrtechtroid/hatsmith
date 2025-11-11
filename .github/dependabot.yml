@@ -10,7 +10,6 @@ updates:
     schedule:
       interval: "daily"
       
-updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
