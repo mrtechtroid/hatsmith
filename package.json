@@ -7,7 +7,7 @@
     "build": "browserify service-worker/sw.js -o public/service-worker.js && next build",
     "postbuild": "node ./post-build.js",
     "start": "next start -p 3991",
-    "lint": "next lint",
+    "lint": "eslint",
     "test": "cypress open"
   },
   "dependencies": {
