@@ -36,6 +36,6 @@
     "cypress-file-upload": "^5.0.8",
     "cypress-real-events": "^1.15.0",
     "eslint": "9.39.1",
-    "eslint-config-next": "16.0.7"
+    "eslint-config-next": "16.0.10"
   }
 }
