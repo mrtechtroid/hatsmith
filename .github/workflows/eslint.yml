@@ -1,0 +1,73 @@
+name: ESLint
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited, ready_for_review]
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 2 * * *'
+
+permissions:
+  contents: write
+  checks: write
+  statuses: write
+  pull-requests: write
+  actions: read
+
+jobs:
+  eslint:
+    name: runner / eslint
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node_version:
+          - "lts"
+
+    steps:
+      - uses: actions/checkout@v6.0.1
+      - name: setup Node.js
+        uses: actions/setup-node@v6.1.0
+        with:
+          node-version: ${{ matrix.node_version }}
+      - name: eslint-github-pr-check
+        uses: ./
+        with:
+          tool_name: eslint-github-pr-check
+          reporter: github-pr-check
+          level: info
+          eslint_flags: "testdata/ --ignore-pattern /test-subproject/"
+      - name: eslint-github-check
+        uses: ./
+        with:
+          tool_name: eslint-github-check
+          reporter: github-check
+          level: warning
+          eslint_flags: "testdata/ --ignore-pattern /test-subproject/"
+      - name: eslint-github-pr-review
+        uses: ./
+        with:
+          tool_name: eslint-github-pr-review
+          reporter: github-pr-review
+          eslint_flags: "testdata/ --ignore-pattern /test-subproject/"
+      - name: eslint-subproject-github-pr-review
+        uses: ./
+        with:
+          tool_name: eslint-subproject-github-pr-review
+          reporter: github-pr-review
+          workdir: ./test-subproject
+          eslint_flags: "sub-testdata/"
+      - name: eslint-subproject
+        uses: ./
+        with:
+          tool_name: eslint-subproject
+          workdir: ./test-subproject
+          eslint_flags: "sub-testdata/"
+          reporter: github-check
+          level: warning
+          filter_mode: file
+    
