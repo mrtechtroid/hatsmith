@@ -244,41 +244,49 @@ const _sodium = require("libsodium-wrappers");
   };
 
   const encryptFirstChunk = (chunk, last, client) => {
-    if (!streamController) {
-      console.log("stream does not exist");
-    }
-    const SIGNATURE = new Uint8Array(
-      config.encoder.encode(config.sigCodes["v2_symmetric"])
-    );
+    setTimeout(function () {
+      if (!streamController) {
+        console.log("stream does not exist");
+        return;
+      }
+      const SIGNATURE = new Uint8Array(
+        config.encoder.encode(config.sigCodes["v2_symmetric"])
+      );
 
-    streamController.enqueue(SIGNATURE);
-    streamController.enqueue(salt);
-    streamController.enqueue(header);
+      streamController.enqueue(SIGNATURE);
+      streamController.enqueue(salt);
+      streamController.enqueue(header);
 
-    let tag = last
-      ? sodium.crypto_secretstream_xchacha20poly1305_TAG_FINAL
-      : sodium.crypto_secretstream_xchacha20poly1305_TAG_MESSAGE;
+      let tag = last
+        ? sodium.crypto_secretstream_xchacha20poly1305_TAG_FINAL
+        : sodium.crypto_secretstream_xchacha20poly1305_TAG_MESSAGE;
 
-    let encryptedChunk = sodium.crypto_secretstream_xchacha20poly1305_push(
-      state,
-      new Uint8Array(chunk),
-      null,
-      tag
-    );
+      let encryptedChunk = sodium.crypto_secretstream_xchacha20poly1305_push(
+        state,
+        new Uint8Array(chunk),
+        null,
+        tag
+      );
 
-    streamController.enqueue(new Uint8Array(encryptedChunk));
+      streamController.enqueue(new Uint8Array(encryptedChunk));
 
-    if (last) {
-      streamController.close();
-      client.postMessage({ reply: "encryptionFinished" });
-    }
+      if (last) {
+        streamController.close();
+        client.postMessage({ reply: "encryptionFinished" });
+      }
 
-    if (!last) {
-      client.postMessage({ reply: "continueEncryption" });
-    }
+      if (!last) {
+        client.postMessage({ reply: "continueEncryption" });
+      }
+    }, 500);
   };
 
   const encryptRestOfChunks = (chunk, last, client) => {
+    if (!streamController) {
+      console.log("stream does not exist in encryptRestOfChunks");
+      return;
+    }
+    
     let tag = last
       ? sodium.crypto_secretstream_xchacha20poly1305_TAG_FINAL
       : sodium.crypto_secretstream_xchacha20poly1305_TAG_MESSAGE;
