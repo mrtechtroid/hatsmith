@@ -25,10 +25,15 @@ const config = require("./config");
 let streamController, fileName, theKey, state, header, salt, encRx, encTx, decRx, decTx;
 
 self.addEventListener("fetch", (e) => {
-  // console.log(e); // log fetch event
+  console.log('[SW] Fetch event:', e.request.url);
+  console.log('[SW] APP_URL:', config.APP_URL);
+  console.log('[SW] URL starts with APP_URL:', e.request.url.startsWith(config.APP_URL));
+  
   if (e.request.url.startsWith(config.APP_URL)) {
+    console.log('[SW] Intercepting file request, fileName:', fileName);
     const stream = new ReadableStream({
       start(controller) {
+        console.log('[SW] Stream started, setting streamController');
         streamController = controller;
       },
     });
@@ -37,14 +42,18 @@ self.addEventListener("fetch", (e) => {
       "Content-Disposition",
       'attachment; filename="' + fileName + '"'
     );
+    console.log('[SW] Responding with stream for file:', fileName);
     e.respondWith(response);
   }
 });
 
+// Use require for browserify compatibility
 const _sodium = require("libsodium-wrappers");
+
 (async () => {
   await _sodium.ready;
   const sodium = _sodium;
+  console.log('[SW] Sodium library loaded and ready');
 
   addEventListener("message", (e) => {
     switch (e.data.cmd) {
@@ -127,8 +136,11 @@ const _sodium = require("libsodium-wrappers");
   });
 
   const assignFileNameEnc = (name, client) => {
+    console.log('[SW] assignFileNameEnc called with:', name);
     fileName = name;
-    client.postMessage({ reply: "filePreparedEnc" })
+    console.log('[SW] fileName set to:', fileName);
+    client.postMessage({ reply: "filePreparedEnc" });
+    console.log('[SW] Sent filePreparedEnc message');
   }
 
   const assignFileNameDec = (name, client) => {
@@ -244,49 +256,49 @@ const _sodium = require("libsodium-wrappers");
   };
 
   const encryptFirstChunk = (chunk, last, client) => {
-    setTimeout(function () {
-      if (!streamController) {
-        console.log("stream does not exist");
-        return;
-      }
-      const SIGNATURE = new Uint8Array(
-        config.encoder.encode(config.sigCodes["v2_symmetric"])
-      );
-
-      streamController.enqueue(SIGNATURE);
-      streamController.enqueue(salt);
-      streamController.enqueue(header);
-
-      let tag = last
-        ? sodium.crypto_secretstream_xchacha20poly1305_TAG_FINAL
-        : sodium.crypto_secretstream_xchacha20poly1305_TAG_MESSAGE;
-
-      let encryptedChunk = sodium.crypto_secretstream_xchacha20poly1305_push(
-        state,
-        new Uint8Array(chunk),
-        null,
-        tag
-      );
-
-      streamController.enqueue(new Uint8Array(encryptedChunk));
-
-      if (last) {
-        streamController.close();
-        client.postMessage({ reply: "encryptionFinished" });
-      }
-
-      if (!last) {
-        client.postMessage({ reply: "continueEncryption" });
-      }
-    }, 500);
-  };
-
-  const encryptRestOfChunks = (chunk, last, client) => {
+    console.log('[SW] encryptFirstChunk called, streamController exists:', !!streamController);
     if (!streamController) {
-      console.log("stream does not exist in encryptRestOfChunks");
+      console.error('[SW] ERROR: streamController is null/undefined!');
+      client.postMessage({ reply: "encryptionError", error: "Stream not initialized" });
       return;
     }
     
+    const SIGNATURE = new Uint8Array(
+      config.encoder.encode(config.sigCodes["v2_symmetric"])
+    );
+
+    console.log('[SW] Enqueueing signature, salt, and header');
+    streamController.enqueue(SIGNATURE);
+    streamController.enqueue(salt);
+    streamController.enqueue(header);
+
+    let tag = last
+      ? sodium.crypto_secretstream_xchacha20poly1305_TAG_FINAL
+      : sodium.crypto_secretstream_xchacha20poly1305_TAG_MESSAGE;
+
+    let encryptedChunk = sodium.crypto_secretstream_xchacha20poly1305_push(
+      state,
+      new Uint8Array(chunk),
+      null,
+      tag
+    );
+
+    console.log('[SW] Enqueueing encrypted chunk, size:', encryptedChunk.length);
+    streamController.enqueue(new Uint8Array(encryptedChunk));
+
+    if (last) {
+      console.log('[SW] Last chunk, closing stream');
+      streamController.close();
+      client.postMessage({ reply: "encryptionFinished" });
+    }
+
+    if (!last) {
+      console.log('[SW] Not last chunk, requesting continuation');
+      client.postMessage({ reply: "continueEncryption" });
+    }
+  };
+
+  const encryptRestOfChunks = (chunk, last, client) => {
     let tag = last
       ? sodium.crypto_secretstream_xchacha20poly1305_TAG_FINAL
       : sodium.crypto_secretstream_xchacha20poly1305_TAG_MESSAGE;
