@@ -35,6 +35,14 @@ self.addEventListener("fetch", (e) => {
       start(controller) {
         console.log('[SW] Stream started, setting streamController');
         streamController = controller;
+        
+        // Notify the client that download has started
+        self.clients.matchAll().then(clients => {
+          clients.forEach(client => {
+            console.log('[SW] Sending downloadStarted message to client');
+            client.postMessage({ reply: "downloadStarted" });
+          });
+        });
       },
     });
     const response = new Response(stream);
