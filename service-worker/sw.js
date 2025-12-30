@@ -35,6 +35,14 @@ self.addEventListener("fetch", (e) => {
       start(controller) {
         console.log('[SW] Stream started, setting streamController');
         streamController = controller;
+        
+        // Notify all clients that download has started
+        self.clients.matchAll().then(clients => {
+          clients.forEach(client => {
+            console.log('[SW] Sending downloadStarted message to client');
+            client.postMessage({ reply: "downloadStarted" });
+          });
+        });
       },
     });
     const response = new Response(stream);
@@ -201,39 +209,51 @@ const _sodium = require("libsodium-wrappers");
   };
 
   const asymmetricEncryptFirstChunk = (chunk, last, client) => {
-    setTimeout(function () {
-      if (!streamController) {
-        console.log("stream does not exist");
+    console.log('[SW] asymmetricEncryptFirstChunk called, streamController exists:', !!streamController);
+    
+    // Wait for streamController to be ready with a timeout
+    const waitForStreamController = (retries = 0) => {
+      if (streamController) {
+        console.log('[SW] StreamController is ready, proceeding with asymmetric encryption');
+        
+        const SIGNATURE = new Uint8Array(
+          config.encoder.encode(config.sigCodes["v2_asymmetric"])
+        );
+        console.log('[SW] Enqueueing signature and header for asymmetric encryption');
+        streamController.enqueue(SIGNATURE);
+        streamController.enqueue(header);
+
+        let tag = last
+          ? sodium.crypto_secretstream_xchacha20poly1305_TAG_FINAL
+          : sodium.crypto_secretstream_xchacha20poly1305_TAG_MESSAGE;
+
+        let encryptedChunk = sodium.crypto_secretstream_xchacha20poly1305_push(
+          state,
+          new Uint8Array(chunk),
+          null,
+          tag
+        );
+
+        streamController.enqueue(new Uint8Array(encryptedChunk));
+
+        if (last) {
+          streamController.close();
+          client.postMessage({ reply: "encryptionFinished" });
+        }
+
+        if (!last) {
+          client.postMessage({ reply: "continueEncryption" });
+        }
+      } else if (retries < 50) { // Wait up to 5 seconds (50 * 100ms)
+        console.log('[SW] StreamController not ready for asymmetric encryption, retrying in 100ms... (attempt', retries + 1, ')');
+        setTimeout(() => waitForStreamController(retries + 1), 100);
+      } else {
+        console.error('[SW] ERROR: streamController timeout for asymmetric encryption after 5 seconds!');
+        client.postMessage({ reply: "encryptionError", error: "Stream initialization timeout" });
       }
-      const SIGNATURE = new Uint8Array(
-        config.encoder.encode(config.sigCodes["v2_asymmetric"])
-      );
-      console.log(streamController)
-      streamController.enqueue(SIGNATURE);
-      streamController.enqueue(header);
-
-      let tag = last
-        ? sodium.crypto_secretstream_xchacha20poly1305_TAG_FINAL
-        : sodium.crypto_secretstream_xchacha20poly1305_TAG_MESSAGE;
-
-      let encryptedChunk = sodium.crypto_secretstream_xchacha20poly1305_push(
-        state,
-        new Uint8Array(chunk),
-        null,
-        tag
-      );
-
-      streamController.enqueue(new Uint8Array(encryptedChunk));
-
-      if (last) {
-        streamController.close();
-        client.postMessage({ reply: "encryptionFinished" });
-      }
-
-      if (!last) {
-        client.postMessage({ reply: "continueEncryption" });
-      }
-    }, 500);
+    };
+    
+    waitForStreamController();
   };
 
   let encKeyGenerator = (password, client) => {
@@ -257,45 +277,55 @@ const _sodium = require("libsodium-wrappers");
 
   const encryptFirstChunk = (chunk, last, client) => {
     console.log('[SW] encryptFirstChunk called, streamController exists:', !!streamController);
-    if (!streamController) {
-      console.error('[SW] ERROR: streamController is null/undefined!');
-      client.postMessage({ reply: "encryptionError", error: "Stream not initialized" });
-      return;
-    }
     
-    const SIGNATURE = new Uint8Array(
-      config.encoder.encode(config.sigCodes["v2_symmetric"])
-    );
+    // Wait for streamController to be ready with a timeout
+    const waitForStreamController = (retries = 0) => {
+      if (streamController) {
+        console.log('[SW] StreamController is ready, proceeding with encryption');
+        
+        const SIGNATURE = new Uint8Array(
+          config.encoder.encode(config.sigCodes["v2_symmetric"])
+        );
 
-    console.log('[SW] Enqueueing signature, salt, and header');
-    streamController.enqueue(SIGNATURE);
-    streamController.enqueue(salt);
-    streamController.enqueue(header);
+        console.log('[SW] Enqueueing signature, salt, and header');
+        streamController.enqueue(SIGNATURE);
+        streamController.enqueue(salt);
+        streamController.enqueue(header);
 
-    let tag = last
-      ? sodium.crypto_secretstream_xchacha20poly1305_TAG_FINAL
-      : sodium.crypto_secretstream_xchacha20poly1305_TAG_MESSAGE;
+        let tag = last
+          ? sodium.crypto_secretstream_xchacha20poly1305_TAG_FINAL
+          : sodium.crypto_secretstream_xchacha20poly1305_TAG_MESSAGE;
 
-    let encryptedChunk = sodium.crypto_secretstream_xchacha20poly1305_push(
-      state,
-      new Uint8Array(chunk),
-      null,
-      tag
-    );
+        let encryptedChunk = sodium.crypto_secretstream_xchacha20poly1305_push(
+          state,
+          new Uint8Array(chunk),
+          null,
+          tag
+        );
 
-    console.log('[SW] Enqueueing encrypted chunk, size:', encryptedChunk.length);
-    streamController.enqueue(new Uint8Array(encryptedChunk));
+        console.log('[SW] Enqueueing encrypted chunk, size:', encryptedChunk.length);
+        streamController.enqueue(new Uint8Array(encryptedChunk));
 
-    if (last) {
-      console.log('[SW] Last chunk, closing stream');
-      streamController.close();
-      client.postMessage({ reply: "encryptionFinished" });
-    }
+        if (last) {
+          console.log('[SW] Last chunk, closing stream');
+          streamController.close();
+          client.postMessage({ reply: "encryptionFinished" });
+        }
 
-    if (!last) {
-      console.log('[SW] Not last chunk, requesting continuation');
-      client.postMessage({ reply: "continueEncryption" });
-    }
+        if (!last) {
+          console.log('[SW] Not last chunk, requesting continuation');
+          client.postMessage({ reply: "continueEncryption" });
+        }
+      } else if (retries < 50) { // Wait up to 5 seconds (50 * 100ms)
+        console.log('[SW] StreamController not ready, retrying in 100ms... (attempt', retries + 1, ')');
+        setTimeout(() => waitForStreamController(retries + 1), 100);
+      } else {
+        console.error('[SW] ERROR: streamController timeout after 5 seconds!');
+        client.postMessage({ reply: "encryptionError", error: "Stream initialization timeout" });
+      }
+    };
+    
+    waitForStreamController();
   };
 
   const encryptRestOfChunks = (chunk, last, client) => {
