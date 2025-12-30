@@ -473,7 +473,7 @@ export default function EncryptionPanel() {
   const kickOffEncryption = async () => {
     if (currFile <= numberOfFiles - 1) {
       file = files[currFile];
-      window.open(`file`, "_self");
+      window.location.href = '/file';
       setIsDownloading(true);
 
       if (encryptionMethodState === "publicKey") {
