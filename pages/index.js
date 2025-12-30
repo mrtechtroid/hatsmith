@@ -28,7 +28,7 @@ const Home = () => {
     //register service worker
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker
-        .register(`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/service-worker.js`)
+        .register("/service-worker.js", { scope: "/" })
         .then((reg) => {
           reg.update();
           setSwReg(true);
