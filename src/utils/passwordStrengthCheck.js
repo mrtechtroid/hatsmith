@@ -54,15 +54,80 @@ const options = {
 }
 zxcvbnOptions.setOptions(options)
 
+// Enhanced password complexity validation (CWE-521)
+// Minimum length increased from 12 to 16 characters
+// Added complexity validation (3+ character types required)
+const validatePasswordComplexity = (password) => {
+  const minLength = 16; // Increased from 12 to 16 characters
+  const errors = [];
+  
+  // Length check
+  if (password.length < minLength) {
+    errors.push(t("password_too_short").replace("{min}", minLength));
+  }
+  
+  // Character type checks
+  const hasLowercase = /[a-z]/.test(password);
+  const hasUppercase = /[A-Z]/.test(password);
+  const hasNumbers = /\d/.test(password);
+  const hasSpecialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`]/.test(password);
+  
+  const characterTypes = [hasLowercase, hasUppercase, hasNumbers, hasSpecialChars];
+  const typeCount = characterTypes.filter(Boolean).length;
+  
+  // Require at least 3 different character types
+  if (typeCount < 3) {
+    errors.push(t("password_complexity_required"));
+  }
+  
+  // Common weak password patterns
+  const weakPatterns = [
+    /^(.)\1+$/, // All same character
+    /^(012|123|234|345|456|567|678|789|890|abc|bcd|cde|def|efg|fgh|ghi|hij|ijk|jkl|klm|lmn|mno|nop|opq|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz)/i, // Sequential
+    /^(password|123456|qwerty|admin|letmein|welcome|monkey|dragon|master|shadow|login|princess|football|baseball|superman|batman|trustno1)/i, // Common passwords
+  ];
+  
+  for (const pattern of weakPatterns) {
+    if (pattern.test(password)) {
+      errors.push(t("password_too_common"));
+      break;
+    }
+  }
+  
+  return {
+    isValid: errors.length === 0,
+    errors: errors,
+    meetsMinLength: password.length >= minLength,
+    hasComplexity: typeCount >= 3
+  };
+};
+
 const passwordStrengthCheck = (password) => {
+  // First check basic complexity requirements
+  const complexityCheck = validatePasswordComplexity(password);
+  
+  if (!complexityCheck.isValid) {
+    return [t("insufficient"), t("improve_password"), complexityCheck.errors];
+  }
   
   let strengthResult = zxcvbn(password);
   console.log(strengthResult);
   let score = strengthResult.score;
   let crackTimeInSeconds = strengthResult.crackTimesSeconds.offlineSlowHashing1e4PerSecond;
   let crackTime = display_time(crackTimeInSeconds);
-
+  // Adjust score based on enhanced requirements
+  if (password.length >= 20 && complexityCheck.hasComplexity) {
+    score = Math.min(4, score + 1); // Bonus for very long complex passwords
+  }
+  
+  return [strength[score], crackTime, []];
   return [strength[score], crackTime];
 };
+// Export the complexity validator for use in components
+export const validatePasswordComplexity = validatePasswordComplexity;
+
+// Export minimum length constant
+export const MIN_PASSWORD_LENGTH = 16;
+
 
 export default passwordStrengthCheck;
