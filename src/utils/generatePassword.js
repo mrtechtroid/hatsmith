@@ -72,8 +72,8 @@ const generateFallbackWord = (sodium) => {
 
 // Secure memory clearing utility for sensitive data
 export const clearSensitiveData = (data) => {
-  if (data && typeof data === 'string') {
-    // Overwrite string data (limited effectiveness in JS, but good practice)
-    data = '\0'.repeat(data.length);
-  }
+  // Note: JavaScript strings are immutable - this function cannot actually clear
+  // the original string data. Consider using typed arrays (Uint8Array) for
+  // sensitive data that needs to be securely cleared.
+  console.warn('clearSensitiveData: JavaScript strings cannot be securely cleared');
 };
