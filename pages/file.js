@@ -49,9 +49,62 @@ export default function FilePage() {
       if (event.data && event.data.reply === "downloadStarted") {
         clearTimeout(timeout);
       }
+      
+      // Handle subsequent file downloads for multi-file encryption
+      if (event.data && event.data.reply === "filePreparedEnc") {
+        console.log('[File Page] Next file prepared, triggering download');
+        setTimeout(triggerDownload, 500);
+      }
     };
 
     navigator.serviceWorker.addEventListener("message", handleMessage);
+
+    // Trigger the download by making a fetch request to /download-file
+    const triggerDownload = async () => {
+      try {
+        console.log('[File Page] Triggering download fetch request');
+        const response = await fetch('/download-file');
+        
+        if (response.ok) {
+          // Create a blob from the response
+          const blob = await response.blob();
+          
+          // Get the filename from Content-Disposition header
+          const contentDisposition = response.headers.get('Content-Disposition');
+          let filename = 'encrypted_file.enc';
+          if (contentDisposition) {
+            const filenameMatch = contentDisposition.match(/filename="(.+)"/);
+            if (filenameMatch) {
+              filename = filenameMatch[1];
+            }
+          }
+          
+          // Create download link and trigger download
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+          
+          console.log('[File Page] Download triggered successfully');
+          
+          // After successful download, check if there are more files to download
+          // by listening for service worker messages about next file preparation
+        } else {
+          console.error('[File Page] Download fetch failed:', response.status);
+          setError(true);
+        }
+      } catch (error) {
+        console.error('[File Page] Download error:', error);
+        setError(true);
+      }
+    };
+
+    // Small delay to ensure service worker is ready
+    setTimeout(triggerDownload, 500);
 
     // Cleanup
     return () => {

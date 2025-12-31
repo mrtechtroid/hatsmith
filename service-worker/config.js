@@ -1,4 +1,4 @@
-const APP_URL = self.location.origin + "/file";
+const APP_URL = self.location.origin + "/download-file";
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 const sigCodes = {
