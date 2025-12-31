@@ -142,6 +142,7 @@ const _sodium = require("libsodium-wrappers");
 
   const assignFileNameEnc = (name, client) => {
     fileName = name;
+    downloadReady = true; // Set downloadReady flag to enable fetch handling
     client.postMessage({ reply: "filePreparedEnc" })
   }
 
@@ -152,6 +153,7 @@ const _sodium = require("libsodium-wrappers");
 
   const assignFileNameDec = (name, client) => {
     fileName = name;
+    downloadReady = true; // Set downloadReady flag to enable fetch handling
     client.postMessage({ reply: "filePreparedDec" })
   }
 
