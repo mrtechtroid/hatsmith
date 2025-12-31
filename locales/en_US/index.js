@@ -59,7 +59,7 @@ const en_US = {
   show_private_key: "Show Private Key",
   load_public_key: "Load Public Key",
   load_private_key: "Load Private Key",
-  short_password: "Please enter a password with a minimum length of 12 characters. Or generate one.",
+  short_password: "Please enter a password with a minimum length of 16 characters. Or generate one.",
   wrong_public_key: "Wrong Public Key",
   wrong_private_key: "Wrong Private Key",
   invalid_keys_input: "Invalid keys input.",
@@ -70,6 +70,7 @@ const en_US = {
   checking_file: "Checking file...",
   page_close_alert: "Don't close the page while files are downloading!",
   offline_note: "Files are not uploaded to a server, everything is done offline in your browser.",
+  characters: "characters",
   
   // Password Strength Check
   very_weak: "Very Weak (guessable)",
@@ -86,6 +87,11 @@ const en_US = {
   months: "months",
   years: "years",
   centuries: "centuries",
+  insufficient: "Insufficient",
+  improve_password: "Please improve your password",
+  password_too_short: "Password must be at least {min} characters long",
+  password_complexity_required: "Password must contain at least 3 different character types (lowercase, uppercase, numbers, special characters)",
+  password_too_common: "Password is too common or follows a predictable pattern",
 
   // Encryption
   encryption: "Encryption",
