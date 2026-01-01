@@ -262,6 +262,10 @@ export default function EncryptionPanel() {
 
   const [pkAlert, setPkAlert] = useState(false);
 
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const [showInfo, setShowInfo] = useState(false);
+
   const [isPassphraseMode, setIsPassphraseMode] = useState(false);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -336,6 +340,16 @@ export default function EncryptionPanel() {
   };
 
   const handleMethodStep = () => {
+  const handleOpenInfo = (file) => {
+    setSelectedFile(file);
+    setShowInfo(true);
+  };
+
+  const handleCloseInfo = () => {
+    setShowInfo(false);
+    setSelectedFile(null);
+  };
+
     if (encryptionMethodState === "secretKey") {
       if (Password.length >= 12) {
         setActiveStep(2);
@@ -607,7 +621,6 @@ export default function EncryptionPanel() {
           startEncryption("secretKey");
           break;
 
-
         case "encryptionStarted":
           // Don't navigate immediately - wait for encryption to complete
           break;
@@ -638,20 +651,6 @@ export default function EncryptionPanel() {
                 prepareFile();
               }, 1000);
             } else {
-            setIsDownloading(false);
-            handleNext();
-          }
-          break;
-        case "encryptionFinished":
-          if (numberOfFiles > 1) {
-            updateCurrFile();
-            file = null;
-            index = null;
-            if (currFile <= numberOfFiles - 1) {
-              setTimeout(function () {
-                prepareFile();
-              }, 1000);
-            } else {
               setIsDownloading(false);
               handleNext();
             }
@@ -662,16 +661,8 @@ export default function EncryptionPanel() {
             }, 500);
           }
           break;
-      }
-
-  const handleOpenInfo = (file) => {
-    setSelectedFile(file);
-    setShowInfo(true);
-  };
-
-  const handleCloseInfo = () => {
-    setShowInfo(false);
-    setSelectedFile(null);
+    });
+  }, []);
   };
 
   return (
