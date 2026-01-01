@@ -63,7 +63,7 @@ export default function FilePage() {
     const triggerDownload = async () => {
       try {
         console.log('[File Page] Triggering download fetch request to /api/download-file');
-        const response = await fetch('/download-file');
+        const response = await fetch('/api/download-file');
         
         if (response.ok) {
           // Create a blob from the response

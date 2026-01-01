@@ -560,7 +560,7 @@ self.addEventListener("fetch", (e) => {
   
   // Enhanced fetch handler for file downloads
   // Check if this is a request to the download-file endpoint and we're ready to serve a file
-  if (e.request.url.includes('/download-file') && downloadReady) {
+  if (e.request.url.includes('/api/download-file') && downloadReady) {
     console.log('[SW] Intercepting download request, downloadReady:', downloadReady, 'fileName:', fileName);
     
     const stream = new ReadableStream({
@@ -589,7 +589,7 @@ self.addEventListener("fetch", (e) => {
     // Reset the downloadReady flag after creating the response
     downloadReady = false;
     e.respondWith(response);
-  } else if (e.request.url.includes('/download-file')) {
+  } else if (e.request.url.includes('/api/download-file')) {
     console.log('[SW] Download request received but not ready. downloadReady:', downloadReady);
     // Let the request pass through to the API endpoint when not ready
   }
