@@ -23,7 +23,10 @@ export default function handler(req, res) {
     console.log('[API] /download-file endpoint reached - service worker may not be ready');
     
     // Return a minimal response that indicates the service worker should handle this
-    res.status(200).json({ message: 'Service worker should handle this request' });
+    res.status(202).json({ 
+      message: 'Encryption in progress - service worker will handle download',
+      status: 'waiting'
+    });
   } catch (error) {
     console.error('[API] Download preparation failed:', error);
     res.status(500).json({ error: 'Download preparation failed', details: error.message });

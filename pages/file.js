@@ -29,6 +29,8 @@ export default function FilePage() {
   const router = useRouter();
   const [error, setError] = useState(false);
   const [timeoutReached, setTimeoutReached] = useState(false);
+  const [downloadStarted, setDownloadStarted] = useState(false);
+  const [waitingForEncryption, setWaitingForEncryption] = useState(true);
 
   useEffect(() => {
     let timeout;
@@ -51,11 +53,17 @@ export default function FilePage() {
     const handleMessage = (event) => {
       if (event.data && event.data.reply === "downloadStarted") {
         console.log('[File Page] Download started message received');
+        setDownloadStarted(true);
+        setWaitingForEncryption(false);
         clearTimeout(timeout);
       }
       
-      if (event.data && event.data.reply === "encryptionStarted") {
+      if (event.data && event.data.reply === "encryptionFinished") {
+        console.log('[File Page] Encryption finished message received');
+        setWaitingForEncryption(false);
         clearTimeout(timeout);
+        // Trigger download after a short delay to ensure service worker is ready
+        setTimeout(triggerDownload, 1000);
       }
       
       // Handle subsequent file downloads for multi-file encryption
@@ -75,7 +83,7 @@ export default function FilePage() {
         
         // Clear any existing timeout and set a new one
         clearTimeout(timeout);
-        timeout = setTimeout(setErrorTimeout, 15000); // 15 seconds timeout
+        timeout = setTimeout(setErrorTimeout, 30000); // 30 seconds timeout for better reliability
         console.log('[File Page] Triggering download fetch request to /api/download-file');
         const response = await fetch('/api/download-file');
         
@@ -105,6 +113,7 @@ export default function FilePage() {
           
           console.log('[File Page] Download triggered successfully');
           
+          clearTimeout(timeout);
           // After successful download, check if there are more files to download
           // by listening for service worker messages about next file preparation
         } else {
@@ -140,10 +149,19 @@ export default function FilePage() {
     };
 
     // Set initial timeout and start download process
-    timeout = setTimeout(setErrorTimeout, 15000);
+    timeout = setTimeout(setErrorTimeout, 45000); // Longer initial timeout
     
-    // Small delay to ensure service worker is ready, then trigger download
-    setTimeout(triggerDownload, 1000);
+    // Don't trigger download immediately - wait for encryption to finish
+    // The download will be triggered by the encryptionFinished message handler
+    console.log('[File Page] Waiting for encryption to complete...');
+    
+    // Fallback: if no encryption finished message is received, try download after delay
+    setTimeout(() => {
+      if (waitingForEncryption) {
+        console.log('[File Page] Fallback: triggering download after timeout');
+        triggerDownload();
+      }
+    }, 10000);
 
     // Cleanup
     return () => {
@@ -183,7 +201,10 @@ export default function FilePage() {
     <Container className={classes.container}>
       <CircularProgress size={60} className={classes.progress} />
       <Typography variant="h6" className={classes.message}>
-        {t("preparing_download") || "Preparing your download..."}
+        {waitingForEncryption 
+          ? (t("encrypting_files") || "Encrypting your files...")
+          : (t("preparing_download") || "Preparing your download...")
+        }
       </Typography>
       <Typography variant="body2" color="textSecondary">
         {t("page_close_alert") || "Don't close the page while files are downloading!"}
