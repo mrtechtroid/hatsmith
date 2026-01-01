@@ -96,9 +96,9 @@ export default function FilePage() {
         } else {
           console.error('[File Page] Download fetch failed:', response.status, response.statusText);
           // If the response is empty or has no content, it might be a service worker issue
-          if (response.status === 200 && response.headers.get('content-length') === '0') {
-            console.error('[File Page] Service worker may not have intercepted the request properly');
-          }
+if (response.status === 200 && (!response.headers.get('content-length') || response.headers.get('content-length') === '0')) {
+  console.error('[File Page] Service worker may not have intercepted the request properly');
+}
           setTimeout(() => setError(true), 1000); // Small delay to allow for potential retry
         }
       } catch (error) {
