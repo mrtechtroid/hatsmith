@@ -8,6 +8,7 @@ const config = require("./config");
 
 let streamController, fileName, theKey, state, header, salt, encRx, encTx, decRx, decTx;
 let downloadReady = false; // Flag to control when downloads should start
+let encryptionInProgress = false; // Flag to track encryption state
 
 self.addEventListener('activate', (event) => {
   console.log('[SW] Activated');
@@ -128,7 +129,8 @@ const _sodium = require("libsodium-wrappers");
 
   const assignFileNameEnc = (name, client) => {
     fileName = name;
-    // Don't set downloadReady here - wait until encryption actually starts
+    downloadReady = false; // Reset download ready state
+    encryptionInProgress = false; // Reset encryption state
     console.log('[SW] File name assigned for encryption:', name);
     client.postMessage({ reply: "filePreparedEnc" })
   }
@@ -140,7 +142,8 @@ const _sodium = require("libsodium-wrappers");
 
   const assignFileNameDec = (name, client) => {
     fileName = name;
-    // Don't set downloadReady here - wait until decryption actually starts
+    downloadReady = false; // Reset download ready state
+    encryptionInProgress = false; // Reset encryption state
     console.log('[SW] File name assigned for decryption:', name);
     client.postMessage({ reply: "filePreparedDec" })
   }
@@ -214,8 +217,8 @@ const _sodium = require("libsodium-wrappers");
   const asymmetricEncryptFirstChunk = (chunk, last, client) => {
     console.log('[SW] asymmetricEncryptFirstChunk called, streamController exists:', !!streamController);
     
-    // Set downloadReady flag when encryption actually starts
-    downloadReady = true;
+    // Set encryption in progress flag
+    encryptionInProgress = true;
     
     // Notify clients that encryption has started
     self.clients.matchAll().then(clients => {
@@ -251,6 +254,10 @@ const _sodium = require("libsodium-wrappers");
 
         if (last) {
           streamController.close();
+          // Set download ready only when encryption is complete
+          downloadReady = true;
+          encryptionInProgress = false;
+          console.log('[SW] Asymmetric encryption finished, downloadReady set to true');
           client.postMessage({ reply: "encryptionFinished" });
         }
 
@@ -298,8 +305,8 @@ const _sodium = require("libsodium-wrappers");
   const encryptFirstChunk = (chunk, last, client) => {
     console.log('[SW] encryptFirstChunk called, streamController exists:', !!streamController);
     
-    // Set downloadReady flag when encryption actually starts
-    downloadReady = true;
+    // Set encryption in progress flag
+    encryptionInProgress = true;
     
     // Notify clients that encryption has started
     self.clients.matchAll().then(clients => {
@@ -335,6 +342,10 @@ const _sodium = require("libsodium-wrappers");
 
       if (last) {
         streamController.close();
+        // Set download ready only when encryption is complete
+        downloadReady = true;
+        encryptionInProgress = false;
+        console.log('[SW] Symmetric encryption finished, downloadReady set to true');
         client.postMessage({ reply: "encryptionFinished" });
       }
 
@@ -365,6 +376,10 @@ const _sodium = require("libsodium-wrappers");
 
     if (last) {
       streamController.close();
+      // Set download ready only when encryption is complete
+      downloadReady = true;
+      encryptionInProgress = false;
+      console.log('[SW] Encryption of remaining chunks finished, downloadReady set to true');
       client.postMessage({ reply: "encryptionFinished" });
     }
 
@@ -583,7 +598,7 @@ self.addEventListener("fetch", (e) => {
   
   // Enhanced fetch handler for file downloads
   // Check if this is a request to the download-file endpoint and we're ready to serve a file
-  if (e.request.url.includes('/api/download-file') && downloadReady) {
+  if (e.request.url.includes('/api/download-file') && downloadReady && !encryptionInProgress) {
     console.log('[SW] Intercepting download request, downloadReady:', downloadReady, 'fileName:', fileName);
     
     // Reset the downloadReady flag immediately to prevent duplicate requests
@@ -613,7 +628,7 @@ self.addEventListener("fetch", (e) => {
     downloadReady = false;
     e.respondWith(response);
   } else if (e.request.url.includes('/api/download-file')) {
-    console.log('[SW] Download request received but not ready. downloadReady:', downloadReady);
+    console.log('[SW] Download request received but not ready. downloadReady:', downloadReady, 'encryptionInProgress:', encryptionInProgress);
     // Let the request pass through to the API endpoint when not ready
   }
 });

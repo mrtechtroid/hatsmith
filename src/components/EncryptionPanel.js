@@ -607,10 +607,11 @@ export default function EncryptionPanel() {
           startEncryption("secretKey");
           break;
 
+
         case "encryptionStarted":
-          // Navigate to download page when encryption actually starts
-          window.location.href = '/file';
+          // Don't navigate immediately - wait for encryption to complete
           break;
+
 
         case "keyPairReady":
           startEncryption("publicKey");
@@ -637,19 +638,15 @@ export default function EncryptionPanel() {
                 prepareFile();
               }, 1000);
             } else {
-              setIsDownloading(false);
-              handleNext();
-            }
-          } else {
             setIsDownloading(false);
             handleNext();
           }
           break;
+            // Navigate to download page after single file encryption
+            setTimeout(() => {
+              window.location.href = '/file';
+            }, 500);
       }
-    });
-  }, []);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [showInfo, setShowInfo] = useState(false);
 
   const handleOpenInfo = (file) => {
     setSelectedFile(file);
