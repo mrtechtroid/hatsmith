@@ -459,6 +459,15 @@ export default function EncryptionPanel() {
 
   const handleEncryptedFilesDownload = async (e) => {
     numberOfFiles = Files.length;
+    
+    // Ensure service worker is ready before starting encryption
+    if (!('serviceWorker' in navigator)) {
+      console.error('[Encryption] Service worker not supported');
+      return;
+    }
+    
+    console.log('[Encryption] Starting encryption process for', numberOfFiles, 'files');
+    
     prepareFile();
   };
 
@@ -466,6 +475,7 @@ export default function EncryptionPanel() {
     // send file name to sw
     let fileName = encodeURIComponent(files[currFile].name + ".enc");
     navigator.serviceWorker.ready.then((reg) => {
+      console.log('[Encryption] Preparing file name:', fileName);
       reg.active.postMessage({ cmd: "prepareFileNameEnc", fileName });
     });
   };
