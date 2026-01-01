@@ -62,7 +62,7 @@ export default function FilePage() {
     // Trigger the download by making a fetch request to /download-file
     const triggerDownload = async () => {
       try {
-        console.log('[File Page] Triggering download fetch request');
+        console.log('[File Page] Triggering download fetch request to /download-file');
         const response = await fetch('/download-file');
         
         if (response.ok) {
@@ -94,11 +94,12 @@ export default function FilePage() {
           // After successful download, check if there are more files to download
           // by listening for service worker messages about next file preparation
         } else {
-          console.error('[File Page] Download fetch failed:', response.status);
+          console.error('[File Page] Download fetch failed:', response.status, response.statusText);
           setError(true);
         }
       } catch (error) {
-        console.error('[File Page] Download error:', error);
+        console.error('[File Page] Download error:', error.message);
+        console.error('[File Page] Full error:', error);
         setError(true);
       }
     };
