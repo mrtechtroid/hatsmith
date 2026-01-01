@@ -339,7 +339,6 @@ export default function EncryptionPanel() {
     setCurrFileState(currFile);
   };
 
-  const handleMethodStep = () => {
   const handleOpenInfo = (file) => {
     setSelectedFile(file);
     setShowInfo(true);
@@ -349,6 +348,8 @@ export default function EncryptionPanel() {
     setShowInfo(false);
     setSelectedFile(null);
   };
+
+  const handleMethodStep = () => {
 
     if (encryptionMethodState === "secretKey") {
       if (Password.length >= 12) {
@@ -660,7 +661,7 @@ export default function EncryptionPanel() {
               window.location.href = '/file';
             }, 500);
           }
-          break;
+      }
     });
   }, []);
   };
