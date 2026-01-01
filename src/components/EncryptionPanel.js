@@ -284,9 +284,9 @@ export default function EncryptionPanel() {
     setKeysError(false);
     setShortPasswordError(false);
   };
-    setPasswordComplexityErrors([]);
 
   const handleRadioChange = (method) => {
+    if (method === "secretKey2") {
       setIsPassphraseMode(true);
       method = "secretKey";
     } else {

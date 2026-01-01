@@ -124,7 +124,7 @@ const passwordStrengthCheck = (password) => {
   return [strength[score], crackTime];
 };
 // Export the complexity validator for use in components
-export const validatePasswordComplexity = validatePasswordComplexity;
+export { validatePasswordComplexity };
 
 // Export minimum length constant
 export const MIN_PASSWORD_LENGTH = 16;
