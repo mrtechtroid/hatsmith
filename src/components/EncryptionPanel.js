@@ -642,10 +642,26 @@ export default function EncryptionPanel() {
             handleNext();
           }
           break;
+        case "encryptionFinished":
+          if (numberOfFiles > 1) {
+            updateCurrFile();
+            file = null;
+            index = null;
+            if (currFile <= numberOfFiles - 1) {
+              setTimeout(function () {
+                prepareFile();
+              }, 1000);
+            } else {
+              setIsDownloading(false);
+              handleNext();
+            }
+          } else {
             // Navigate to download page after single file encryption
             setTimeout(() => {
               window.location.href = '/file';
             }, 500);
+          }
+          break;
       }
 
   const handleOpenInfo = (file) => {
