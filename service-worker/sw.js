@@ -558,7 +558,7 @@ const _sodium = require("libsodium-wrappers");
 self.addEventListener("fetch", (e) => {
   console.log('[SW] Fetch:', e.request.url);
   
-  // Enhanced fetch handler for file downloads  
+  // Enhanced fetch handler for file downloads
   // Check if this is a request to the download-file endpoint and we're ready to serve a file
   if (e.request.url.includes('/download-file') && downloadReady) {
     console.log('[SW] Intercepting download request, downloadReady:', downloadReady, 'fileName:', fileName);
@@ -575,6 +575,9 @@ self.addEventListener("fetch", (e) => {
           });
         });
       },
+      cancel() {
+        console.log('[SW] Stream cancelled');
+      }
     
     });
     const response = new Response(stream);
@@ -582,9 +585,12 @@ self.addEventListener("fetch", (e) => {
       "Content-Disposition",
       'attachment; filename="' + fileName + '"'
     );
+    
+    // Reset the downloadReady flag after creating the response
+    downloadReady = false;
     e.respondWith(response);
   } else if (e.request.url.includes('/download-file')) {
     console.log('[SW] Download request received but not ready. downloadReady:', downloadReady);
-    downloadReady = false; // Reset flag after creating stream
+    // Let the request pass through to the API endpoint when not ready
   }
 });

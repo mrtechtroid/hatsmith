@@ -62,7 +62,7 @@ export default function FilePage() {
     // Trigger the download by making a fetch request to /download-file
     const triggerDownload = async () => {
       try {
-        console.log('[File Page] Triggering download fetch request to /download-file');
+        console.log('[File Page] Triggering download fetch request to /api/download-file');
         const response = await fetch('/download-file');
         
         if (response.ok) {
@@ -95,12 +95,16 @@ export default function FilePage() {
           // by listening for service worker messages about next file preparation
         } else {
           console.error('[File Page] Download fetch failed:', response.status, response.statusText);
-          setError(true);
+          // If the response is empty or has no content, it might be a service worker issue
+          if (response.status === 200 && response.headers.get('content-length') === '0') {
+            console.error('[File Page] Service worker may not have intercepted the request properly');
+          }
+          setTimeout(() => setError(true), 1000); // Small delay to allow for potential retry
         }
       } catch (error) {
         console.error('[File Page] Download error:', error.message);
         console.error('[File Page] Full error:', error);
-        setError(true);
+        setTimeout(() => setError(true), 1000); // Small delay to allow for potential retry
       }
     };
 

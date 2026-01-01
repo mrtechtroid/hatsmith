@@ -13,11 +13,19 @@ export default function handler(req, res) {
   try {
     // Set headers that indicate this is a file download
     res.setHeader('Content-Type', 'application/octet-stream');
+    res.setHeader('Content-Disposition', 'attachment; filename="encrypted_file.enc"');
     res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET');
     
-    // The service worker will intercept this and provide the actual file content
-    res.status(200).end();
+    // The service worker should intercept this request
+    // If we reach here, the service worker didn't intercept properly
+    console.log('[API] /download-file endpoint reached - service worker may not be ready');
+    
+    // Return a minimal response that indicates the service worker should handle this
+    res.status(200).json({ message: 'Service worker should handle this request' });
   } catch (error) {
-    res.status(500).json({ error: 'Download preparation failed' });
+    console.error('[API] Download preparation failed:', error);
+    res.status(500).json({ error: 'Download preparation failed', details: error.message });
   }
 }
