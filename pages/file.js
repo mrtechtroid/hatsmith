@@ -31,11 +31,14 @@ export default function FilePage() {
   const [timeoutReached, setTimeoutReached] = useState(false);
 
   useEffect(() => {
-    // Set a timeout to show error message if download doesn't start
-    const timeout = setTimeout(() => {
+    let timeout;
+    let downloadAttempts = 0;
+    const maxDownloadAttempts = 3;
+    
+    const setErrorTimeout = () => {
       setTimeoutReached(true);
       setError(true);
-    }, 10000); // 10 seconds timeout
+    };
 
     // Check if service worker is available
     if (!("serviceWorker" in navigator)) {
@@ -47,6 +50,11 @@ export default function FilePage() {
     // Listen for service worker messages
     const handleMessage = (event) => {
       if (event.data && event.data.reply === "downloadStarted") {
+        console.log('[File Page] Download started message received');
+        clearTimeout(timeout);
+      }
+      
+      if (event.data && event.data.reply === "encryptionStarted") {
         clearTimeout(timeout);
       }
       
@@ -62,6 +70,12 @@ export default function FilePage() {
     // Trigger the download by making a fetch request to /download-file
     const triggerDownload = async () => {
       try {
+        downloadAttempts++;
+        console.log('[File Page] Download attempt', downloadAttempts, 'of', maxDownloadAttempts);
+        
+        // Clear any existing timeout and set a new one
+        clearTimeout(timeout);
+        timeout = setTimeout(setErrorTimeout, 15000); // 15 seconds timeout
         console.log('[File Page] Triggering download fetch request to /api/download-file');
         const response = await fetch('/api/download-file');
         
@@ -96,20 +110,40 @@ export default function FilePage() {
         } else {
           console.error('[File Page] Download fetch failed:', response.status, response.statusText);
           // If the response is empty or has no content, it might be a service worker issue
-if (response.status === 200 && (!response.headers.get('content-length') || response.headers.get('content-length') === '0')) {
-  console.error('[File Page] Service worker may not have intercepted the request properly');
-}
+          if (response.status === 200 && (!response.headers.get('content-length') || response.headers.get('content-length') === '0')) {
+            console.error('[File Page] Service worker may not have intercepted the request properly');
+            
+            // Retry if we haven't exceeded max attempts
+            if (downloadAttempts < maxDownloadAttempts) {
+              console.log('[File Page] Retrying download in 2 seconds...');
+              setTimeout(triggerDownload, 2000);
+              return;
+            }
+          }
+          
+          clearTimeout(timeout);
           setTimeout(() => setError(true), 1000); // Small delay to allow for potential retry
         }
       } catch (error) {
         console.error('[File Page] Download error:', error.message);
         console.error('[File Page] Full error:', error);
-        setTimeout(() => setError(true), 1000); // Small delay to allow for potential retry
+        clearTimeout(timeout);
+        
+        // Retry if we haven't exceeded max attempts
+        if (downloadAttempts < maxDownloadAttempts) {
+          console.log('[File Page] Retrying download due to error in 2 seconds...');
+          setTimeout(triggerDownload, 2000);
+        } else {
+          setTimeout(() => setError(true), 1000);
+        }
       }
     };
 
-    // Small delay to ensure service worker is ready
-    setTimeout(triggerDownload, 500);
+    // Set initial timeout and start download process
+    timeout = setTimeout(setErrorTimeout, 15000);
+    
+    // Small delay to ensure service worker is ready, then trigger download
+    setTimeout(triggerDownload, 1000);
 
     // Cleanup
     return () => {
