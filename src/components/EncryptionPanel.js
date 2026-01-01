@@ -483,7 +483,6 @@ export default function EncryptionPanel() {
   const kickOffEncryption = async () => {
     if (currFile <= numberOfFiles - 1) {
       file = files[currFile];
-      window.location.href = '/file';
       setIsDownloading(true);
 
       if (encryptionMethodState === "publicKey") {
@@ -608,12 +607,20 @@ export default function EncryptionPanel() {
           startEncryption("secretKey");
           break;
 
+        case "encryptionStarted":
+          // Navigate to download page when encryption actually starts
+          window.location.href = '/file';
+          break;
+
         case "keyPairReady":
           startEncryption("publicKey");
           break;
 
         case "filePreparedEnc":
           kickOffEncryption();
+          break;
+
+        case "downloadStarted":
           break;
 
         case "continueEncryption":

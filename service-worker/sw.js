@@ -128,7 +128,8 @@ const _sodium = require("libsodium-wrappers");
 
   const assignFileNameEnc = (name, client) => {
     fileName = name;
-    downloadReady = true; // Set downloadReady flag to enable fetch handling
+    // Don't set downloadReady here - wait until encryption actually starts
+    console.log('[SW] File name assigned for encryption:', name);
     client.postMessage({ reply: "filePreparedEnc" })
   }
 
@@ -139,7 +140,8 @@ const _sodium = require("libsodium-wrappers");
 
   const assignFileNameDec = (name, client) => {
     fileName = name;
-    downloadReady = true; // Set downloadReady flag to enable fetch handling
+    // Don't set downloadReady here - wait until decryption actually starts
+    console.log('[SW] File name assigned for decryption:', name);
     client.postMessage({ reply: "filePreparedDec" })
   }
 
@@ -211,6 +213,16 @@ const _sodium = require("libsodium-wrappers");
 
   const asymmetricEncryptFirstChunk = (chunk, last, client) => {
     console.log('[SW] asymmetricEncryptFirstChunk called, streamController exists:', !!streamController);
+    
+    // Set downloadReady flag when encryption actually starts
+    downloadReady = true;
+    
+    // Notify clients that encryption has started
+    self.clients.matchAll().then(clients => {
+      clients.forEach(clientInstance => {
+        clientInstance.postMessage({ reply: "encryptionStarted" });
+      });
+    });
     
     // Wait for streamController to be ready with a timeout
     const waitForStreamController = (retries = 0) => {
@@ -284,6 +296,17 @@ const _sodium = require("libsodium-wrappers");
   };
 
   const encryptFirstChunk = (chunk, last, client) => {
+    console.log('[SW] encryptFirstChunk called, streamController exists:', !!streamController);
+    
+    // Set downloadReady flag when encryption actually starts
+    downloadReady = true;
+    
+    // Notify clients that encryption has started
+    self.clients.matchAll().then(clients => {
+      clients.forEach(clientInstance => {
+        clientInstance.postMessage({ reply: "encryptionStarted" });
+      });
+    });
     setTimeout(function () {
       if (!streamController) {
         console.log("stream does not exist");
@@ -563,6 +586,7 @@ self.addEventListener("fetch", (e) => {
   if (e.request.url.includes('/api/download-file') && downloadReady) {
     console.log('[SW] Intercepting download request, downloadReady:', downloadReady, 'fileName:', fileName);
     
+    // Reset the downloadReady flag immediately to prevent duplicate requests
     const stream = new ReadableStream({
       start(controller) {
         streamController = controller;
@@ -586,7 +610,6 @@ self.addEventListener("fetch", (e) => {
       'attachment; filename="' + fileName + '"'
     );
     
-    // Reset the downloadReady flag after creating the response
     downloadReady = false;
     e.respondWith(response);
   } else if (e.request.url.includes('/api/download-file')) {
