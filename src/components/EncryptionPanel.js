@@ -664,7 +664,6 @@ export default function EncryptionPanel() {
       }
     });
   }, []);
-  };
 
   return (
     <div className={classes.root} {...getRootProps()}>
