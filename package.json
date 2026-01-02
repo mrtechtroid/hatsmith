@@ -2,6 +2,9 @@
   "name": "hatsmith",
   "version": "3.0.1",
   "private": true,
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "dev": "browserify service-worker/sw.js -o public/service-worker.js && next dev",
     "build": "browserify service-worker/sw.js -o public/service-worker.js && next build",
@@ -20,6 +23,7 @@
     "@zxcvbn-ts/core": "^3.0.4",
     "@zxcvbn-ts/language-common": "^3.0.4",
     "@zxcvbn-ts/language-en": "^3.0.2",
+    "browserify": "^17.0.1",
     "cypress": "^15.8.1",
     "libsodium-wrappers": "^0.7.15",
     "marked": "17.0.1",
@@ -31,10 +35,9 @@
     "react-dropzone": "^14.3.8"
   },
   "devDependencies": {
-    "browserify": "^17.0.1",
     "cypress-file-upload": "^5.0.8",
     "cypress-real-events": "^1.15.0",
     "eslint": "9.39.2",
     "eslint-config-next": "16.1.1"
   }
-}
+} 
