@@ -472,10 +472,15 @@ export default function EncryptionPanel() {
     }
   };
 
-  const handleEncryptedFilesDownload = async (e) => {
+  const handleEncryptedFilesDownload = (e) => {
+    e.preventDefault();
     numberOfFiles = Files.length;
+    resetCurrFile();
     
-    
+    // Start the encryption process by preparing the first file
+    if (Files.length > 0) {
+      prepareFile();
+    }
   };
 
   const prepareFile = () => {
