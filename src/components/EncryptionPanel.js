@@ -475,22 +475,12 @@ export default function EncryptionPanel() {
   const handleEncryptedFilesDownload = async (e) => {
     numberOfFiles = Files.length;
     
-    // Ensure service worker is ready before starting encryption
-    if (!('serviceWorker' in navigator)) {
-      console.error('[Encryption] Service worker not supported');
-      return;
-    }
-    
-    console.log('[Encryption] Starting encryption process for', numberOfFiles, 'files');
-    
-    prepareFile();
   };
 
   const prepareFile = () => {
     // send file name to sw
     let fileName = encodeURIComponent(files[currFile].name + ".enc");
     navigator.serviceWorker.ready.then((reg) => {
-      console.log('[Encryption] Preparing file name:', fileName);
       reg.active.postMessage({ cmd: "prepareFileNameEnc", fileName });
     });
   };
@@ -622,13 +612,7 @@ export default function EncryptionPanel() {
           startEncryption("secretKey");
           break;
 
-        case "encryptionStarted":
-          // Don't navigate immediately - wait for encryption to complete
           break;
-
-
-        case "keyPairReady":
-          startEncryption("publicKey");
           break;
 
         case "filePreparedEnc":
@@ -636,6 +620,15 @@ export default function EncryptionPanel() {
           break;
 
         case "downloadStarted":
+          break;
+
+        case "downloadReady":
+          // Trigger download when service worker is ready
+          triggerFileDownload();
+          break;
+
+        case "keyPairReady":
+          startEncryption("publicKey");
           break;
 
         case "continueEncryption":
@@ -656,14 +649,44 @@ export default function EncryptionPanel() {
               handleNext();
             }
           } else {
-            // Navigate to download page after single file encryption
-            setTimeout(() => {
-              window.location.href = '/file';
-            }, 500);
+            // For single file, wait for service worker to be ready then trigger download
+            setIsDownloading(false);
+            handleNext();
           }
+          break;
       }
     });
   }, []);
+
+  const triggerFileDownload = async () => {
+    try {
+      console.log('[Encryption] Triggering file download');
+      const response = await fetch('/api/download-file');
+      
+      if (response.ok) {
+        const blob = await response.blob();
+        const contentDisposition = response.headers.get('Content-Disposition');
+        let filename = 'encrypted_file.enc';
+        if (contentDisposition) {
+          const filenameMatch = contentDisposition.match(/filename="(.+)"/);
+          if (filenameMatch) {
+            filename = decodeURIComponent(filenameMatch[1]);
+          }
+        }
+        
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      }
+    } catch (error) {
+      console.error('[Encryption] Download failed:', error);
+    }
+  };
 
   return (
     <div className={classes.root} {...getRootProps()}>
