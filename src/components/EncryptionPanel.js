@@ -475,6 +475,7 @@ export default function EncryptionPanel() {
   const handleEncryptedFilesDownload = async (e) => {
     numberOfFiles = Files.length;
     
+    
   };
 
   const prepareFile = () => {
@@ -627,6 +628,7 @@ export default function EncryptionPanel() {
           triggerFileDownload();
           break;
 
+        case "downloadStarted":
         case "keyPairReady":
           startEncryption("publicKey");
           break;
