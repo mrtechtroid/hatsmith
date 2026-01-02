@@ -260,29 +260,6 @@ const _sodium = require("libsodium-wrappers");
       }
     };
     
-  const encKeyGenerator = (password, client) => {
-    // Generate salt for key derivation
-    salt = sodium.randombytes_buf(sodium.crypto_pwhash_SALTBYTES);
-
-    // Derive key using Argon2id with enhanced parameters
-    theKey = sodium.crypto_pwhash(
-      sodium.crypto_secretstream_xchacha20poly1305_KEYBYTES,
-      password,
-      salt,
-      sodium.crypto_pwhash_OPSLIMIT_SENSITIVE,
-      sodium.crypto_pwhash_MEMLIMIT_SENSITIVE,
-      sodium.crypto_pwhash_ALG_ARGON2ID13
-    );
-
-    let res = sodium.crypto_secretstream_xchacha20poly1305_init_push(theKey);
-    state = res.state;
-    header = res.header;
-
-    client.postMessage({ reply: "keysGenerated" });
-    
-    // Clear password from memory after use
-    secureMemoryClear(new Uint8Array(Buffer.from(password, 'utf8')));
-  };
 
     }, 100);
 
