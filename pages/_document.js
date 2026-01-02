@@ -10,6 +10,9 @@ export default class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
+
+          {/* Registers the service worker and triggers encrypted downloads */}
+          <script src="/hatsmith-sw-client.js" defer />
         </body>
       </Html>
     );
@@ -22,14 +25,14 @@ MyDocument.getInitialProps = async (ctx) => {
 
   ctx.renderPage = () =>
     originalRenderPage({
-      enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
+      enhanceApp: (App) => (props) =>
+        sheets.collect(<App {...props} />),
     });
 
   const initialProps = await Document.getInitialProps(ctx);
 
   return {
     ...initialProps,
-    // Styles fragment is rendered after the app and page rendering finish.
     styles: [
       ...React.Children.toArray(initialProps.styles),
       sheets.getStyleElement(),
