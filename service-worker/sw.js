@@ -210,6 +210,30 @@ const _sodium = require("libsodium-wrappers");
     }
   };
 
+  const encKeyGenerator = (password, client) => {
+    // Generate random salt for Argon2 key derivation
+    salt = sodium.randombytes_buf(sodium.crypto_pwhash_SALTBYTES);
+
+    // Derive key using Argon2id with sensitive parameters
+    theKey = sodium.crypto_pwhash(
+      sodium.crypto_secretstream_xchacha20poly1305_KEYBYTES,
+      password,
+      salt,
+      sodium.crypto_pwhash_OPSLIMIT_SENSITIVE,
+      sodium.crypto_pwhash_MEMLIMIT_SENSITIVE,
+      sodium.crypto_pwhash_ALG_ARGON2ID13
+    );
+
+    let res = sodium.crypto_secretstream_xchacha20poly1305_init_push(theKey);
+    state = res.state;
+    header = res.header;
+
+    client.postMessage({ reply: "keysGenerated" });
+    
+    // Clear password from memory after use
+    secureMemoryClear(new Uint8Array(Buffer.from(password, 'utf8')));
+  };
+
   const asymmetricEncryptFirstChunk = (chunk, last, client) => {
     encryptionInProgress = true;
     
@@ -252,44 +276,24 @@ const _sodium = require("libsodium-wrappers");
         }
 
         if (!last) {
-      } else if (retries < 50) { // Wait up to 5 seconds (50 * 100ms)
-        setTimeout(() => waitForStreamController(retries + 1), 100);
+          client.postMessage({ reply: "continueEncryption" });
+        }
       } else {
-        console.error('[SW] ERROR: streamController timeout for asymmetric encryption after 5 seconds!');
-        client.postMessage({ reply: "encryptionError", error: "Stream initialization timeout" });
+        console.error('[SW] ERROR: streamController not available for asymmetric encryption!');
+        client.postMessage({ reply: "encryptionError", error: "Stream not available" });
       }
-    };
-    
-
     }, 100);
-
-    theKey = sodium.crypto_pwhash(
-      sodium.crypto_secretstream_xchacha20poly1305_KEYBYTES,
-      password,
-      salt,
-      sodium.crypto_pwhash_OPSLIMIT_SENSITIVE,
-      sodium.crypto_pwhash_MEMLIMIT_SENSITIVE,
-      sodium.crypto_pwhash_ALG_ARGON2ID13
-    );
-
-    let res = sodium.crypto_secretstream_xchacha20poly1305_init_push(theKey);
-    state = res.state;
-    header = res.header;
-
-    client.postMessage({ reply: "keysGenerated" });
-    
-    // Clear password from memory after use
-    secureMemoryClear(new Uint8Array(Buffer.from(password, 'utf8')));
   };
 
   const encryptFirstChunk = (chunk, last, client) => {
     encryptionInProgress = true;
     
     // Notify clients that encryption has started
+    
+    // Initialize stream immediately
+    initializeDownloadStream(client);
+    
     self.clients.matchAll().then(clients => {
-      clients.forEach(clientInstance => {
-        clientInstance.postMessage({ reply: "encryptionStarted" });
-      });
     });
     setTimeout(function () {
     // Initialize stream immediately
@@ -323,6 +327,7 @@ const _sodium = require("libsodium-wrappers");
       if (last) {
         streamController.close();
         encryptionInProgress = false;
+        downloadReady = true;
         client.postMessage({ reply: "encryptionFinished" });
       }
 
@@ -354,6 +359,7 @@ const _sodium = require("libsodium-wrappers");
     if (last) {
       streamController.close();
       encryptionInProgress = false;
+      downloadReady = true;
       client.postMessage({ reply: "encryptionFinished" });
     }
 
@@ -364,20 +370,22 @@ const _sodium = require("libsodium-wrappers");
 
   const initializeDownloadStream = (client) => {
     if (!streamController) {
+      console.log('[SW] Initializing download stream');
       const stream = new ReadableStream({
         start(controller) {
           streamController = controller;
-          downloadReady = true;
-          
-          // Notify client that download is ready
-          client.postMessage({ reply: "downloadReady" });
+          console.log('[SW] Stream controller initialized');
         },
         cancel() {
           console.log('[SW] Stream cancelled');
           streamController = null;
           downloadReady = false;
+          encryptionInProgress = false;
         }
       });
+      
+      // Store the stream for later use in fetch handler
+      self.encryptionStream = stream;
     }
   };
 
@@ -587,28 +595,36 @@ const _sodium = require("libsodium-wrappers");
 })();
 
 self.addEventListener("fetch", (e) => {
-  if (e.request.url.includes('/api/download-file') && downloadReady && streamController) {
-    const stream = new ReadableStream({
-      start(controller) {
-        // Use existing streamController
-        if (streamController && streamController.enqueue) {
-          // Stream is already set up, just return it
-          return;
+  if (e.request.url.includes('/api/download-file')) {
+    console.log('[SW] Intercepting download request, downloadReady:', downloadReady, 'streamController:', !!streamController);
+    
+    if (downloadReady && self.encryptionStream) {
+      console.log('[SW] Serving encrypted file download');
+      const response = new Response(self.encryptionStream, {
+        headers: {
+          'Content-Disposition': `attachment; filename="${fileName}"`,
+          'Content-Type': 'application/octet-stream',
+          'Cache-Control': 'no-cache'
         }
-      },
-      cancel() {
-        streamController = null;
+      });
+      
+      // Clean up after serving
+      setTimeout(() => {
+        self.encryptionStream = null;
         downloadReady = false;
-      }
-    });
-    
-    // Create response with the existing stream data
-    const response = new Response(streamController ? null : stream);
-    response.headers.append(
-      "Content-Disposition",
-      'attachment; filename="' + fileName + '"'
-    );
-    
-    e.respondWith(response);
+        streamController = null;
+      }, 1000);
+      
+      e.respondWith(response);
+    } else if (encryptionInProgress) {
+      // Encryption still in progress, return a waiting response
+      console.log('[SW] Encryption in progress, returning wait response');
+      e.respondWith(new Response(JSON.stringify({ status: 'encrypting' }), {
+        headers: { 'Content-Type': 'application/json' }
+      }));
+    } else {
+      // Let the request pass through to the API
+      console.log('[SW] No encrypted file ready, passing through to API');
+    }
   }
 });
