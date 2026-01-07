@@ -102,13 +102,12 @@ You can install the app with docker in multiple ways. You are free to choose whi
 
 <br>
 
-<!-- - #### install from docker hub
-(Hatsmith is not yet available on docker hub yet, but you can use the docker image from the github repository)
+- #### install from GHCR
 
-1. pull image from docker hub
+1. pull image from GHCR
 
 ```bash
-docker pull shdv/hat.sh:latest
+docker pull ghcr.io/mrtechtroid/hatsmith:master
 ```
 
 2. run container
@@ -117,7 +116,7 @@ docker pull shdv/hat.sh:latest
 docker run -d -p 3991:80 shdv/hat.sh
 ```
 
-<br> -->
+<br> 
 
 - #### Build an image from source
 
