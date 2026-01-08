@@ -990,8 +990,8 @@ export default function DecryptionPanel() {
               {oldVersion && (
                 <Alert severity="error" style={{ marginTop: 15 }}>
                   {t("old_version")}{" "}
-                  <a href="https://v1.hat.sh/" target="_blank" rel="noreferrer">
-                    {"https://v1.hat.sh"}
+                  <a href="https://web.archive.org/web/20211028050731/https://v1.hat.sh/" target="_blank" rel="noreferrer">
+                    {"https://v1.hat.sh (Archived)"}
                   </a>
                   <br />
                   {Files.length > 1 ? <strong>{oldVersion}</strong> : ""}
