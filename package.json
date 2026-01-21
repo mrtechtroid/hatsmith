@@ -35,7 +35,7 @@
     "browserify": "^17.0.0",
     "cypress-file-upload": "^5.0.8",
     "cypress-real-events": "^1.14.0",
-    "eslint": "9.39.2",
-    "eslint-config-next": "12.1.6"
+    "eslint": "^8.15.0",
+    "eslint-config-next": "^12.1.6"
   }
 }
