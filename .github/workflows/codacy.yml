@@ -1,0 +1,98 @@
+name: Codacy Security Scan
+
+# Give the runner the permissions needed to upload SARIF results
+permissions:
+  contents: read
+  actions: read
+  security-events: write
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 3 * * *'
+
+jobs:
+  codacy-security-scan:
+    name: Run Codacy and split SARIF by run
+    runs-on: ubuntu-latest
+    outputs:
+      sarif_files: ${{ steps.split.outputs.sarif_files }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Run Codacy Analysis CLI
+        uses: codacy/codacy-analysis-cli-action@master
+        with:
+          output: results.sarif
+          format: sarif
+          gh-code-scanning-compat: true
+          max-allowed-issues: 2147483647
+
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - id: split
+        name: Split SARIF into one file per run (if necessary)
+        run: |
+          if [ ! -f results.sarif ]; then
+            echo "results.sarif not found"
+            exit 1
+          fi
+
+          count=$(jq '.runs | length' results.sarif)
+          echo "Found $count run(s) in results.sarif"
+
+          if [ "$count" -le 1 ]; then
+            echo "sarif_files=[\"results.sarif\"]" >> $GITHUB_OUTPUT
+          else
+            files_array="["
+            for i in $(seq 0 $((count - 1))); do
+              out="results.${i}.sarif"
+              jq --argjson i "$i" '. as $orig | ($orig | del(.runs)) + { runs: [ $orig.runs[$i] ] }' results.sarif > "$out"
+              files_array="${files_array}\"${out}\""
+              if [ "$i" -lt $((count - 1)) ]; then
+                files_array="${files_array},"
+              fi
+            done
+            files_array="${files_array}]"
+            echo "sarif_files=${files_array}" >> $GITHUB_OUTPUT
+          fi
+        shell: bash
+
+      - name: Upload SARIF artifact so next job can access files
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: sarif-files
+          path: |
+            results.sarif
+            results.*.sarif
+
+  upload-sarifs:
+    name: Upload SARIF files (one job per SARIF file)
+    needs: codacy-security-scan
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        sarif_file: ${{ fromJson(needs.codacy-security-scan.outputs.sarif_files) }}
+    steps:
+      - name: Checkout code (optional)
+        uses: actions/checkout@v5
+
+      - name: Download SARIF artifacts
+        uses: actions/download-artifact@v5.0.0
+        with:
+          name: sarif-files
+          path: ./
+
+      - name: Show downloaded SARIF files (debug)
+        run: |
+          echo "Listing SARIF files in workspace:"
+          ls -la
+
+      - name: Upload SARIF results file (${{ matrix.sarif_file }})
+        uses: github/codeql-action/upload-sarif@main
+        with:
+          sarif_file: ${{ matrix.sarif_file }}
+          # Optional: explicitly provide a token (use only if GITHUB_TOKEN is insufficient).
+          # token: ${{ secrets.SARIF_UPLOAD_PAT }}

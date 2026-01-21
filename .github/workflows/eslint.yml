@@ -1,0 +1,21 @@
+name: eslint
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  checks: write
+  statuses: write
+  pull-requests: write
+  actions: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6.0.1
+    - name: Install modules
+      run: yarn
+    - name: Run ESLint
+      run: eslint . --ext .js
