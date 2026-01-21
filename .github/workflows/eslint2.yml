@@ -1,0 +1,26 @@
+name: ESLint2
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  checks: write
+  statuses: write
+  pull-requests: write
+  actions: read
+
+jobs:
+  eslint:
+    name: runner / eslint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6.0.1
+      - uses: reviewdog/action-eslint@v1.34.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+
+    
