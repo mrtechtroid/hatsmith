@@ -18,10 +18,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6.0.1
-      - uses: reviewdog/action-eslint@v1.34.0
+
+      - name: Read Node version from .nvmrc
+        id: node_version
+        run: |
+          version=$(cat .nvmrc 2>/dev/null || true)
+          version=$(echo "$version" | tr -d '[:space:]')
+          if [ -z "$version" ]; then
+            echo "No .nvmrc found or it is empty — falling back to Node 18"
+            version="18"
+          fi
+          echo "node-version=$version" >> $GITHUB_OUTPUT
+
+      - name: Use Node from .nvmrc
+        uses: actions/setup-node@v6.2.0
+        with:
+          node-version: ${{ steps.node_version.outputs.node-version }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint (reviewdog)
+        uses: reviewdog/action-eslint@v1.34.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review
-          eslint_flags: "src/"
-
-    
+          eslint_flags: "."
